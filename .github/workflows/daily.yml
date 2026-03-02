@@ -23,6 +23,7 @@ jobs:
 
       - name: Run script
         run: python barakar_news.py
+        run: python trending_news.py
         env:
           SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
           RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
