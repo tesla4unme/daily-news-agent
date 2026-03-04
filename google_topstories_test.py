@@ -56,9 +56,11 @@ for utc_time, entry in articles:
     if not placed:
         grouped["📰 Other"].append((utc_time, entry))
 
-# -------- BUILD EMAIL --------
+# -------- HEADER INFO --------
 today_date = datetime.now().strftime("%d %B %Y")
+total_news = len(articles)
 
+# -------- BUILD EMAIL --------
 html_content = f"""
 <html>
 <body style="font-family:Arial, sans-serif;background:#f4f6f8;padding:20px;">
@@ -77,7 +79,7 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 </h1>
 
 <p style="text-align:center;color:gray;">
-{today_date}
+{today_date} • {total_news} headlines
 </p>
 
 <hr>
@@ -109,7 +111,7 @@ for category, items in grouped.items():
             publisher = "Unknown Source"
 
         # Alternate card color
-        card_color = "#ffffff" if count % 2 == 0 else "#f8f9fb"
+        card_color = "#ffffff" if count % 2 == 0 else "#fafafa"
 
         html_content += f"""
         <div style="
@@ -118,21 +120,26 @@ for category, items in grouped.items():
         margin-bottom:12px;
         border-radius:8px;
         border:1px solid #e6e6e6;
+        border-left:4px solid #1a73e8;
         ">
 
         <b>{count}. <a href="{entry.link}" style="
         text-decoration:none;
         color:#1a73e8;
         font-size:17px;
+        line-height:1.35;
         ">
         {entry.title}
         </a></b>
 
-        <br>
+        <br><br>
 
         <span style="
         font-size:12px;
         color:#666;
+        background:#eef2f7;
+        padding:3px 7px;
+        border-radius:4px;
         ">
         {publisher} • {formatted_time}
         </span>
