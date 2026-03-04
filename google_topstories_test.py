@@ -120,6 +120,18 @@ for category, items in grouped.items():
         # Convert UTC → IST
         if utc_time != datetime.min:
             ist_time = utc_time + timedelta(hours=5, minutes=30)
+            now_ist = datetime.utcnow() + timedelta(hours=5, minutes=30)
+
+            
+            age = now_ist - ist_time
+            hours = int(age.total_seconds() // 3600)
+            minutes = int((age.total_seconds() % 3600) // 60)
+
+            if hours > 0:
+                age_label = f"{hours}h ago"
+            else:
+                age_label = f"{minutes}m ago"
+            
             formatted_time = ist_time.strftime("%d %b %Y • %H:%M IST")
         else:
             formatted_time = "Time not available"
@@ -162,7 +174,7 @@ for category, items in grouped.items():
         padding:3px 7px;
         border-radius:4px;
         ">
-        {publisher} • {formatted_time}
+        {publisher} • {formatted_time}•{age_label}
         </span>
 
         </div>
