@@ -174,7 +174,7 @@ for category, items in grouped.items():
         padding:3px 7px;
         border-radius:4px;
         ">
-        {publisher} • {formatted_time}•{age_label}
+        {publisher} • {formatted_time}  •  {age_label}
         </span>
 
         </div>
