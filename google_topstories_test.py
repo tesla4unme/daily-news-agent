@@ -19,6 +19,16 @@ headline_colors = [
 "#5d4037",
 "#455a64"
 ]
+card_colors = [
+"#fdf2f2",  # light red
+"#f2f7fd",  # light blue
+"#f4fbf4",  # light green
+"#faf3fd",  # light purple
+"#fff6ed",  # light orange
+"#f0fafa",  # light teal
+"#f7f7f7",  # light grey
+"#fffbea"   # light yellow
+]
 # -------- FETCH FEED --------
 feed = feedparser.parse(RSS_URL)
 
@@ -121,7 +131,7 @@ for category, items in grouped.items():
             publisher = "Unknown Source"
 
         # Alternate card color
-        card_color = "#ffffff" if count % 2 == 0 else "#fafafa"
+        card_color = random.choice(card_colors)
         headline_color = random.choice(headline_colors)
 
         html_content += f"""
