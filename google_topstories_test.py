@@ -103,7 +103,7 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 </h1>
 
 <p style="text-align:center;color:gray;">
-{today_date} • TOTAL_COUNT  headlines
+{today_date} • {TOTAL_COUNT}  headlines
 </p>
 
 <hr>
