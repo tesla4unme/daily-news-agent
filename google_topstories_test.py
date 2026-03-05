@@ -103,7 +103,7 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 </h1>
 
 <p style="text-align:center;color:gray;">
-{today_date} • {TOTAL_COUNT}  headlines
+{today_date} • TOTAL_COUNT  headlines
 </p>
 
 <hr>
@@ -270,9 +270,6 @@ color:gray;
 text-align:center;
 ">
 Source: Google News India RSS
-html_content = html_content.replace(
-    "TOTAL_COUNT",
-    str(count - 1)
 )
 </p>
 
@@ -280,7 +277,10 @@ html_content = html_content.replace(
 </body>
 </html>
 """
-
+html_content = html_content.replace(
+    "TOTAL_COUNT",
+    str(count - 1)
+    
 # -------- EMAIL CONFIG --------
 sender_email = os.environ["SENDER_EMAIL"]
 receiver_email = os.environ["RECEIVER_EMAIL"]
