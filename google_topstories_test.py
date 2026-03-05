@@ -280,7 +280,7 @@ Source: Google News India RSS
 html_content = html_content.replace(
     "TOTAL_COUNT",
     str(count - 1)
-    
+)    
 # -------- EMAIL CONFIG --------
 sender_email = os.environ["SENDER_EMAIL"]
 receiver_email = os.environ["RECEIVER_EMAIL"]
