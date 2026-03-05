@@ -9,27 +9,31 @@ import random
 
 # -------- SETTINGS --------
 RSS_URL = "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en"
+
+city_feeds = {
+    "🌆 Bengaluru": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
+    "🏭 Asansol": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
+    "🌉 Kolkata": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
+    "🌄 Ranchi": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en"
+}
+
 headline_colors = [
-"#1a73e8",
-"#c62828",
-"#2e7d32",
-"#6a1b9a",
-"#ef6c00",
-"#00838f",
-"#5d4037",
-"#455a64"
+"#1a73e8","#c62828","#2e7d32","#6a1b9a",
+"#ef6c00","#00838f","#5d4037","#455a64"
 ]
+
 card_colors = [
-"#fdf2f2",  # light red
-"#f2f7fd",  # light blue
-"#f4fbf4",  # light green
-"#faf3fd",  # light purple
-"#fff6ed",  # light orange
-"#f0fafa",  # light teal
-"#f7f7f7",  # light grey
-"#fffbea"   # light yellow
+"#fdf2f2",
+"#f2f7fd",
+"#f4fbf4",
+"#faf3fd",
+"#fff6ed",
+"#f0fafa",
+"#f7f7f7",
+"#fffbea"
 ]
-# -------- FETCH FEED --------
+
+# -------- FETCH MAIN FEED --------
 feed = feedparser.parse(RSS_URL)
 
 if len(feed.entries) == 0:
@@ -107,6 +111,83 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 
 count = 1
 
+# -------- CITY NEWS SECTIONS --------
+for city, url in city_feeds.items():
+
+    city_feed = feedparser.parse(url)
+
+    if len(city_feed.entries) == 0:
+        continue
+
+    html_content += f"<h2 style='margin-top:35px;color:#333;'>{city}</h2>"
+
+    for entry in city_feed.entries[:5]:
+
+        if hasattr(entry, "published_parsed") and entry.published_parsed:
+            utc_time = datetime.fromtimestamp(time.mktime(entry.published_parsed))
+            ist_time = utc_time + timedelta(hours=5, minutes=30)
+
+            now_ist = datetime.utcnow() + timedelta(hours=5, minutes=30)
+
+            age = now_ist - ist_time
+            hours = int(age.total_seconds() // 3600)
+            minutes = int((age.total_seconds() % 3600) // 60)
+
+            if hours > 0:
+                age_label = f"{hours}h ago"
+            else:
+                age_label = f"{minutes}m ago"
+
+            formatted_time = ist_time.strftime("%d %b %Y • %H:%M IST")
+
+        else:
+            formatted_time = "Time not available"
+            age_label = ""
+
+        if hasattr(entry, "source"):
+            publisher = entry.source.title
+        else:
+            publisher = "Unknown Source"
+
+        card_color = random.choice(card_colors)
+        headline_color = random.choice(headline_colors)
+
+        html_content += f"""
+        <div style="
+        background:{card_color};
+        padding:15px;
+        margin-bottom:12px;
+        border-radius:8px;
+        border:1px solid #e6e6e6;
+        border-left:4px solid #1a73e8;
+        ">
+
+        <b>{count}. <a href="{entry.link}" style="
+        text-decoration:none;
+        color:{headline_color};
+        font-size:17px;
+        line-height:1.35;
+        ">
+        {entry.title}
+        </a></b>
+
+        <br><br>
+
+        <span style="
+        font-size:12px;
+        color:#666;
+        background:#eef2f7;
+        padding:3px 7px;
+        border-radius:4px;
+        ">
+        {publisher} • {formatted_time} • {age_label}
+        </span>
+
+        </div>
+        """
+
+        count += 1
+
 # -------- BUILD STORY CARDS --------
 for category, items in grouped.items():
 
@@ -117,12 +198,10 @@ for category, items in grouped.items():
 
     for utc_time, entry in items:
 
-        # Convert UTC → IST
         if utc_time != datetime.min:
             ist_time = utc_time + timedelta(hours=5, minutes=30)
             now_ist = datetime.utcnow() + timedelta(hours=5, minutes=30)
 
-            
             age = now_ist - ist_time
             hours = int(age.total_seconds() // 3600)
             minutes = int((age.total_seconds() % 3600) // 60)
@@ -131,18 +210,18 @@ for category, items in grouped.items():
                 age_label = f"{hours}h ago"
             else:
                 age_label = f"{minutes}m ago"
-            
+
             formatted_time = ist_time.strftime("%d %b %Y • %H:%M IST")
+
         else:
             formatted_time = "Time not available"
+            age_label = ""
 
-        # Publisher extraction
         if hasattr(entry, "source"):
             publisher = entry.source.title
         else:
             publisher = "Unknown Source"
 
-        # Alternate card color
         card_color = random.choice(card_colors)
         headline_color = random.choice(headline_colors)
 
@@ -174,7 +253,7 @@ for category, items in grouped.items():
         padding:3px 7px;
         border-radius:4px;
         ">
-        {publisher} • {formatted_time}  •  {age_label}
+        {publisher} • {formatted_time} • {age_label}
         </span>
 
         </div>
@@ -219,5 +298,3 @@ with smtplib.SMTP("smtp.gmail.com", 587) as server:
     server.sendmail(sender_email, receiver_email, msg.as_string())
 
 print("Email sent successfully.")
-
-
