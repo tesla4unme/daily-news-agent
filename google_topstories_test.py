@@ -82,7 +82,7 @@ for utc_time, entry in articles:
 
 # -------- HEADER INFO --------
 today_date = datetime.now().strftime("%d %B %Y")
-total_news = len(articles)
+# total_news = len(articles)
 
 # -------- BUILD EMAIL --------
 html_content = f"""
@@ -103,7 +103,7 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 </h1>
 
 <p style="text-align:center;color:gray;">
-{today_date} • {total_news} headlines
+{today_date} • TOTAL_COUNT  headlines
 </p>
 
 <hr>
@@ -187,7 +187,7 @@ for city, url in city_feeds.items():
         """
 
         count += 1
-
+        
 # -------- BUILD STORY CARDS --------
 for category, items in grouped.items():
 
@@ -270,6 +270,10 @@ color:gray;
 text-align:center;
 ">
 Source: Google News India RSS
+html_content = html_content.replace(
+    "TOTAL_COUNT",
+    str(count - 1)
+)
 </p>
 
 </div>
