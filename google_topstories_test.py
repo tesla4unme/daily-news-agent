@@ -57,7 +57,7 @@ articles.sort(reverse=True, key=lambda x: x[0])
 categories = {
     "🌍 Geopolitics": ["war","iran","china","russia","israel","military","conflict","nuclear"],
     "📈 Markets": ["market","stock","shares","profit","loss","lng","oil","gold","economy","bank"],
-    "🧬 Artificial Intelligence": ["Artificial","ChatGpt","Gemini","Anthropic","Claude","Co-pilot","AI "],    
+    "🧬 Artificial Intelligence": ["Artificial","ChatGpt","Gemini","Anthropic","Claude","Co-pilot","AI"],    
     "🎬 Entertainment": ["film","movie","actor","box office","bollywood","hollywood","trailer"]
 }
 
