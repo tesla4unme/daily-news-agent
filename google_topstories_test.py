@@ -14,7 +14,8 @@ city_feeds = {
     "🌆 Bengaluru": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
     "🏭 Asansol": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
     "🌉 Kolkata": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
-    "🌄 Ranchi": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en"
+    "🌄 Ranchi": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en",
+    "🧬 AI"    : "https://news.google.com/rss/search?q=artificial+intelligence&hl=en-IN&gl=IN&ceid=IN:en"
 }
 
 headline_colors = [
@@ -57,7 +58,6 @@ articles.sort(reverse=True, key=lambda x: x[0])
 categories = {
     "🌍 Geopolitics": ["war","iran","china","russia","israel","military","conflict","nuclear"],
     "📈 Markets": ["market","stock","shares","profit","loss","lng","oil","gold","economy","bank"],
-    "🧬 Software": ["Artificial","ChatGpt","Gemini","Anthropic","Claude","Co-pilot","AI"],    
     "🎬 Entertainment": ["film","movie","actor","box office","bollywood","hollywood","trailer"]
 }
 
