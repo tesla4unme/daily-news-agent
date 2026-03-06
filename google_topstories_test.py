@@ -23,14 +23,8 @@ headline_colors = [
 ]
 
 card_colors = [
-"#fdf2f2",
-"#f2f7fd",
-"#f4fbf4",
-"#faf3fd",
-"#fff6ed",
-"#f0fafa",
-"#f7f7f7",
-"#fffbea"
+"#fdf2f2","#f2f7fd","#f4fbf4","#faf3fd",
+"#fff6ed","#f0fafa","#f7f7f7","#fffbea"
 ]
 
 # -------- FETCH MAIN FEED --------
@@ -82,7 +76,6 @@ for utc_time, entry in articles:
 
 # -------- HEADER INFO --------
 today_date = datetime.now().strftime("%d %B %Y")
-# total_news = len(articles)
 
 # -------- BUILD EMAIL --------
 html_content = f"""
@@ -103,13 +96,35 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 </h1>
 
 <p style="text-align:center;color:gray;">
-{today_date} • TOTAL_COUNT  headlines
+{today_date} • TOTAL_COUNT headlines
 </p>
 
 <hr>
 """
 
 count = 1
+
+# -------- TIME FUNCTION --------
+def calculate_age(utc_time):
+    ist_time = utc_time + timedelta(hours=5, minutes=30)
+    now_ist = datetime.utcnow() + timedelta(hours=5, minutes=30)
+
+    age = now_ist - ist_time
+    minutes = int(age.total_seconds() // 60)
+    hours = minutes // 60
+    days = hours // 24
+
+    if minutes < 60:
+        age_label = f"{minutes}m ago"
+    elif hours < 24:
+        age_label = f"{hours}h ago"
+    else:
+        age_label = f"{days}d ago"
+
+    formatted_time = ist_time.strftime("%d %b %Y • %H:%M IST")
+
+    return formatted_time, age_label
+
 
 # -------- CITY NEWS SECTIONS --------
 for city, url in city_feeds.items():
@@ -119,35 +134,25 @@ for city, url in city_feeds.items():
     if len(city_feed.entries) == 0:
         continue
 
-    html_content += f"<h2 style='margin-top:35px;color:#333;'>{city}</h2>"
+    city_articles = []
 
-    for entry in city_feed.entries[:5]:
-
+    for entry in city_feed.entries:
         if hasattr(entry, "published_parsed") and entry.published_parsed:
             utc_time = datetime.fromtimestamp(time.mktime(entry.published_parsed))
-            ist_time = utc_time + timedelta(hours=5, minutes=30)
-
-            now_ist = datetime.utcnow() + timedelta(hours=5, minutes=30)
-
-            age = now_ist - ist_time
-            hours = int(age.total_seconds() // 3600)
-            minutes = int((age.total_seconds() % 3600) // 60)
-
-            if hours > 0:
-                age_label = f"{hours}h ago"
-            else:
-                age_label = f"{minutes}m ago"
-
-            formatted_time = ist_time.strftime("%d %b %Y • %H:%M IST")
-
         else:
-            formatted_time = "Time not available"
-            age_label = ""
+            utc_time = datetime.min
 
-        if hasattr(entry, "source"):
-            publisher = entry.source.title
-        else:
-            publisher = "Unknown Source"
+        city_articles.append((utc_time, entry))
+
+    city_articles.sort(reverse=True, key=lambda x: x[0])
+
+    html_content += f"<h2 style='margin-top:35px;color:#333;'>{city}</h2>"
+
+    for utc_time, entry in city_articles[:5]:
+
+        formatted_time, age_label = calculate_age(utc_time)
+
+        publisher = entry.source.title if hasattr(entry, "source") else "Unknown Source"
 
         card_color = random.choice(card_colors)
         headline_color = random.choice(headline_colors)
@@ -187,8 +192,9 @@ for city, url in city_feeds.items():
         """
 
         count += 1
-        
-# -------- BUILD STORY CARDS --------
+
+
+# -------- CATEGORY NEWS --------
 for category, items in grouped.items():
 
     if len(items) == 0:
@@ -198,29 +204,9 @@ for category, items in grouped.items():
 
     for utc_time, entry in items:
 
-        if utc_time != datetime.min:
-            ist_time = utc_time + timedelta(hours=5, minutes=30)
-            now_ist = datetime.utcnow() + timedelta(hours=5, minutes=30)
+        formatted_time, age_label = calculate_age(utc_time)
 
-            age = now_ist - ist_time
-            hours = int(age.total_seconds() // 3600)
-            minutes = int((age.total_seconds() % 3600) // 60)
-
-            if hours > 0:
-                age_label = f"{hours}h ago"
-            else:
-                age_label = f"{minutes}m ago"
-
-            formatted_time = ist_time.strftime("%d %b %Y • %H:%M IST")
-
-        else:
-            formatted_time = "Time not available"
-            age_label = ""
-
-        if hasattr(entry, "source"):
-            publisher = entry.source.title
-        else:
-            publisher = "Unknown Source"
+        publisher = entry.source.title if hasattr(entry, "source") else "Unknown Source"
 
         card_color = random.choice(card_colors)
         headline_color = random.choice(headline_colors)
@@ -261,6 +247,7 @@ for category, items in grouped.items():
 
         count += 1
 
+
 html_content += """
 <hr>
 
@@ -270,17 +257,18 @@ color:gray;
 text-align:center;
 ">
 Source: Google News India RSS
-)
 </p>
 
 </div>
 </body>
 </html>
 """
+
 html_content = html_content.replace(
     "TOTAL_COUNT",
     str(count - 1)
-)    
+)
+
 # -------- EMAIL CONFIG --------
 sender_email = os.environ["SENDER_EMAIL"]
 receiver_email = os.environ["RECEIVER_EMAIL"]
