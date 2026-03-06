@@ -57,7 +57,7 @@ articles.sort(reverse=True, key=lambda x: x[0])
 categories = {
     "🌍 Geopolitics": ["war","iran","china","russia","israel","military","conflict","nuclear"],
     "📈 Markets": ["market","stock","shares","profit","loss","lng","oil","gold","economy","bank"],
-    "🧬 Science & Tech": ["science","research","ai","technology","study","medical","virus"],
+    "🧬 Artificial Intelligence": ["Artificial","ChatGpt","Gemini","Anthropic","Claude","Co-pilot","AI "],    
     "🎬 Entertainment": ["film","movie","actor","box office","bollywood","hollywood","trailer"]
 }
 
@@ -140,7 +140,7 @@ for city, url in city_feeds.items():
 
     html_content += f"<h2 style='margin-top:35px;color:#333;'>{city}</h2>"
 
-    for utc_time, entry in city_articles[:5]:
+    for utc_time, entry in city_articles[:10]:
 
         ist_time = utc_time + timedelta(hours=5, minutes=30)
         now_ist = datetime.utcnow() + timedelta(hours=5, minutes=30)
