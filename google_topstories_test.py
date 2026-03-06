@@ -53,10 +53,10 @@ articles.sort(reverse=True, key=lambda x: x[0])
 
 # -------- CATEGORY KEYWORDS --------
 categories = {
-    "🌍 Geopolitics": ["war","iran","china","russia","israel","military","conflict","nuclear"],
+    "🌍 Geopolitics": ["america","iran","china","russia","israel","saudi","bomb","conflict","nuclear"],
     "📈 Markets": ["market","stock","shares","profit","loss","lng","oil","gold","economy","bank"],
     "🎬 Entertainment": ["film","movie","actor","box office","bollywood","hollywood","trailer"],
-    "🌉 Kolkata": ["Kolkata","Asansol","Barakar"],
+    "🌉 Kolkata": ["Kolkata","Asansol","Barakar","Bangladesh","Nepal"],
     "🌄 Ranchi": ["Ranchi","Bokaro","Giridih","Dhanbad","Jharkhand"]
 }
 
@@ -139,7 +139,7 @@ for city, url in city_feeds.items():
 
     html_content += f"<h2 style='margin-top:35px;color:#333;'>{city}</h2>"
 
-    for utc_time, entry in city_articles[:10]:
+    for utc_time, entry in city_articles[:5]:
 
         ist_time = utc_time + timedelta(hours=5, minutes=30)
         now_ist = datetime.utcnow() + timedelta(hours=5, minutes=30)
