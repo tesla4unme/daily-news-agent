@@ -56,8 +56,8 @@ categories = {
     "🌍 Geopolitics": ["america","iran","china","russia","israel","saudi","bomb","conflict","nuclear"],
     "📈 Markets": ["market","stock","shares","profit","loss","lng","oil","gold","economy","bank"],
     "🎬 Entertainment": ["film","movie","actor","box office","bollywood","hollywood","trailer"],
-    "🌉 Kolkata": ["Kolkata","Asansol","Barakar","Bangladesh","Nepal"],
-    "🌄 Ranchi": ["Ranchi","Bokaro","Giridih","Dhanbad","Jharkhand"]
+    "🌉 Kolkata": ["kolkata","asansol","barakar","bangladesh","nepal"],
+    "🌄 Ranchi": ["ranchi","bokaro","giridih","dhanbad","jharkhand"]
 }
 
 grouped = {cat: [] for cat in categories}
