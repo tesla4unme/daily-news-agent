@@ -42,7 +42,12 @@ for entry in feed.entries:
     if hasattr(entry, "published_parsed") and entry.published_parsed:
         utc_time = datetime.fromtimestamp(time.mktime(entry.published_parsed))
     else:
-        utc_time = datetime.min
+        continue
+
+    # -------- FILTER >24 HOURS --------
+    now_utc = datetime.utcnow()
+    if (now_utc - utc_time).total_seconds() > 86400:
+        continue
 
     articles.append((utc_time, entry))
 
@@ -120,7 +125,13 @@ for city, url in city_feeds.items():
         if hasattr(entry, "published_parsed") and entry.published_parsed:
             utc_time = datetime.fromtimestamp(time.mktime(entry.published_parsed))
         else:
-            utc_time = datetime.min
+            
+            continue
+
+        # -------- FILTER >24 HOURS --------
+        now_utc = datetime.utcnow()
+        if (now_utc - utc_time).total_seconds() > 86400:
+            continue
 
         city_articles.append((utc_time, entry))
 
