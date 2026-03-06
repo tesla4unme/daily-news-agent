@@ -7,13 +7,14 @@ from datetime import datetime, timedelta
 import time
 import random
 
-# -------- RSS SOURCES --------
-RSS_FEEDS = {
+# -------- SETTINGS --------
+RSS_URL = "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en"
+
+city_feeds = {
     "🌆 Bengaluru": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
     "🏭 Asansol": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
     "🌉 Kolkata": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
-    "🌄 Ranchi": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en",
-    "🇮🇳 India": "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en"
+    "🌄 Ranchi": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en"
 }
 
 headline_colors = [
@@ -26,33 +27,57 @@ card_colors = [
 "#fff6ed","#f0fafa","#f7f7f7","#fffbea"
 ]
 
-# -------- TIME FUNCTION --------
-def calculate_age(utc_time):
+# -------- FETCH MAIN FEED --------
+feed = feedparser.parse(RSS_URL)
 
-    ist_time = utc_time + timedelta(hours=5, minutes=30)
-    now_ist = datetime.utcnow() + timedelta(hours=5, minutes=30)
+if len(feed.entries) == 0:
+    print("No news items found.")
+    exit()
 
-    age = now_ist - ist_time
+# -------- SORT ARTICLES BY TIME --------
+articles = []
 
-    minutes = int(age.total_seconds() // 60)
-    hours = minutes // 60
-    days = hours // 24
+for entry in feed.entries:
 
-    if minutes < 60:
-        age_label = f"{minutes}m ago"
-    elif hours < 24:
-        age_label = f"{hours}h ago"
+    if hasattr(entry, "published_parsed") and entry.published_parsed:
+        utc_time = datetime.fromtimestamp(time.mktime(entry.published_parsed))
     else:
-        age_label = f"{days}d ago"
+        utc_time = datetime.min
 
-    formatted_time = ist_time.strftime("%d %b %Y • %H:%M IST")
+    articles.append((utc_time, entry))
 
-    return formatted_time, age_label
+articles.sort(reverse=True, key=lambda x: x[0])
 
+# -------- CATEGORY KEYWORDS --------
+categories = {
+    "🌍 Geopolitics": ["war","iran","china","russia","israel","military","conflict","nuclear"],
+    "📈 Markets": ["market","stock","shares","profit","loss","lng","oil","gold","economy","bank"],
+    "🧬 Science & Tech": ["science","research","ai","technology","study","medical","virus"],
+    "🎬 Entertainment": ["film","movie","actor","box office","bollywood","hollywood","trailer"]
+}
 
-# -------- EMAIL HEADER --------
+grouped = {cat: [] for cat in categories}
+grouped["📰 Other"] = []
+
+# -------- GROUP ARTICLES --------
+for utc_time, entry in articles:
+
+    title_lower = entry.title.lower()
+    placed = False
+
+    for cat, keywords in categories.items():
+        if any(word in title_lower for word in keywords):
+            grouped[cat].append((utc_time, entry))
+            placed = True
+            break
+
+    if not placed:
+        grouped["📰 Other"].append((utc_time, entry))
+
+# -------- HEADER INFO --------
 today_date = datetime.now().strftime("%d %B %Y")
 
+# -------- BUILD EMAIL --------
 html_content = f"""
 <html>
 <body style="font-family:Arial, sans-serif;background:#f4f6f8;padding:20px;">
@@ -79,32 +104,46 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 
 count = 1
 
-# -------- PROCESS ALL RSS FEEDS --------
-for section, url in RSS_FEEDS.items():
+# -------- CITY NEWS SECTIONS --------
+for city, url in city_feeds.items():
 
-    feed = feedparser.parse(url)
+    city_feed = feedparser.parse(url)
 
-    if len(feed.entries) == 0:
+    if len(city_feed.entries) == 0:
         continue
 
-    articles = []
+    # collect city articles
+    city_articles = []
 
-    for entry in feed.entries:
+    for entry in city_feed.entries:
 
         if hasattr(entry, "published_parsed") and entry.published_parsed:
             utc_time = datetime.fromtimestamp(time.mktime(entry.published_parsed))
         else:
             utc_time = datetime.min
 
-        articles.append((utc_time, entry))
+        city_articles.append((utc_time, entry))
 
-    articles.sort(reverse=True, key=lambda x: x[0])
+    # sort newest first
+    city_articles.sort(reverse=True, key=lambda x: x[0])
 
-    html_content += f"<h2 style='margin-top:35px;color:#333;'>{section}</h2>"
+    html_content += f"<h2 style='margin-top:35px;color:#333;'>{city}</h2>"
 
-    for utc_time, entry in articles[:10]:
+    for utc_time, entry in city_articles[:5]:
 
-        formatted_time, age_label = calculate_age(utc_time)
+        ist_time = utc_time + timedelta(hours=5, minutes=30)
+        now_ist = datetime.utcnow() + timedelta(hours=5, minutes=30)
+
+        age = now_ist - ist_time
+        hours = int(age.total_seconds() // 3600)
+        minutes = int((age.total_seconds() % 3600) // 60)
+
+        if hours > 0:
+            age_label = f"{hours}h ago"
+        else:
+            age_label = f"{minutes}m ago"
+
+        formatted_time = ist_time.strftime("%d %b %Y • %H:%M IST")
 
         publisher = entry.source.title if hasattr(entry,"source") else "Unknown Source"
 
@@ -146,7 +185,76 @@ for section, url in RSS_FEEDS.items():
         """
 
         count += 1
+        
+# -------- BUILD STORY CARDS --------
+for category, items in grouped.items():
 
+    if len(items) == 0:
+        continue
+
+    html_content += f"<h2 style='margin-top:35px;color:#333;'>{category}</h2>"
+
+    for utc_time, entry in items:
+
+        if utc_time != datetime.min:
+            ist_time = utc_time + timedelta(hours=5, minutes=30)
+            now_ist = datetime.utcnow() + timedelta(hours=5, minutes=30)
+
+            age = now_ist - ist_time
+            hours = int(age.total_seconds() // 3600)
+            minutes = int((age.total_seconds() % 3600) // 60)
+
+            if hours > 0:
+                age_label = f"{hours}h ago"
+            else:
+                age_label = f"{minutes}m ago"
+
+            formatted_time = ist_time.strftime("%d %b %Y • %H:%M IST")
+
+        else:
+            formatted_time = "Time not available"
+            age_label = ""
+
+        publisher = entry.source.title if hasattr(entry,"source") else "Unknown Source"
+
+        card_color = random.choice(card_colors)
+        headline_color = random.choice(headline_colors)
+
+        html_content += f"""
+        <div style="
+        background:{card_color};
+        padding:15px;
+        margin-bottom:12px;
+        border-radius:8px;
+        border:1px solid #e6e6e6;
+        border-left:4px solid #1a73e8;
+        ">
+
+        <b>{count}. <a href="{entry.link}" style="
+        text-decoration:none;       
+        color:{headline_color};
+        font-size:17px;
+        line-height:1.35;
+        ">
+        {entry.title}
+        </a></b>
+
+        <br><br>
+
+        <span style="
+        font-size:12px;
+        color:#666;
+        background:#eef2f7;
+        padding:3px 7px;
+        border-radius:4px;
+        ">
+        {publisher} • {formatted_time} • {age_label}
+        </span>
+
+        </div>
+        """
+
+        count += 1
 
 html_content += """
 <hr>
@@ -156,7 +264,7 @@ font-size:12px;
 color:gray;
 text-align:center;
 ">
-Source: RSS Feeds
+Source: Google News India RSS
 </p>
 
 </div>
@@ -181,12 +289,12 @@ msg["From"] = sender_email
 msg["To"] = receiver_email
 msg["Subject"] = subject
 
-msg.attach(MIMEText(html_content,"html"))
+msg.attach(MIMEText(html_content, "html"))
 
 # -------- SEND EMAIL --------
-with smtplib.SMTP("smtp.gmail.com",587) as server:
+with smtplib.SMTP("smtp.gmail.com", 587) as server:
     server.starttls()
-    server.login(sender_email,app_password)
-    server.sendmail(sender_email,receiver_email,msg.as_string())
+    server.login(sender_email, app_password)
+    server.sendmail(sender_email, receiver_email, msg.as_string())
 
 print("Email sent successfully.")
