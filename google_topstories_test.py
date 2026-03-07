@@ -17,18 +17,21 @@ CATEGORIES = {
         "feeds": [
 
             {
+                "name": "national thehindu",
                 "url": "https://www.thehindu.com/news/national/feeder/default.rss",
                 "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
+                "name": "national timesofindia",
                 "url": "http://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms",
                 "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
+                "name": "national google",
                 "url": "https://news.google.com/rss/search?q=India&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 25
@@ -41,24 +44,28 @@ CATEGORIES = {
         "feeds": [
 
             {
+                "name": "Bengaluru google",
                 "url": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
+                "name": "Asansol google",
                 "url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
+                "name": "Kolkata google",
                 "url": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
+                "name": "Ranchi google",
                 "url": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 10
@@ -71,12 +78,14 @@ CATEGORIES = {
         "feeds": [
 
             {
+                "name": "opinion thehindu",
                 "url": "https://www.thehindu.com/opinion/editorial/feeder/default.rss",
                 "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
+                "name": "blog timesofindia",
                 "url": "http://blogs.timesofindia.indiatimes.com/feed/defaultrss",
                 "max_age_hours": 24,
                 "max_items": 10
@@ -89,12 +98,14 @@ CATEGORIES = {
         "feeds": [
 
             {
+                "name": "Tech timesofindia",
                 "url": "https://timesofindia.indiatimes.com/technology/tech-news/rssfeeds/66949542.cms",
                 "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
+                "name": "AI google",
                 "url": "https://news.google.com/rss/search?q=artificial+intelligence&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 10
@@ -107,6 +118,7 @@ CATEGORIES = {
         "feeds": [
 
             {
+                "name": "business thehindu",
                 "url": "https://www.thehindu.com/business/feeder/default.rss",
                 "max_age_hours": 24,
                 "max_items": 10
@@ -195,6 +207,7 @@ for category, config in CATEGORIES.items():
     for feed_cfg in config["feeds"]:
 
         url = feed_cfg["url"]
+        feed_name = feed_cfg.get("name","")
         max_age = feed_cfg["max_age_hours"]
         max_items = feed_cfg["max_items"]
 
@@ -216,7 +229,7 @@ for category, config in CATEGORIES.items():
                 if age_hours > max_age:
                     continue
 
-                articles.append((utc_time, entry))
+                articles.append((utc_time, entry,feed_name))
                 items_added += 1
 
     if len(articles) == 0:
@@ -227,7 +240,7 @@ for category, config in CATEGORIES.items():
 
     html += f"<h2 style='margin-top:30px'>{category}</h2>"
 
-    for utc_time, entry in articles:
+    for utc_time, entry,feed_name in articles:
 
         formatted_time, age = format_age(utc_time)
 
@@ -263,8 +276,8 @@ for category, config in CATEGORIES.items():
         padding:3px 7px;
         border-radius:4px;
         ">
-        {publisher} • {formatted_time} • {age}
-        </span>
+        {publisher} • {formatted_time} • {age} • {feed_name}
+        <span style="color:#999">{feed_name}</span>
 
         </div>
         """
