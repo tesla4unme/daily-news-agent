@@ -34,45 +34,56 @@ CATEGORIES = {
                 "name": "National-Google.com",
                 "url": "https://news.google.com/rss/search?q=India&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
-                "max_items": 25
+                "max_items": 15
             }
 
         ]
     },
 
-    "🌆 Cities": {
-        "feeds": [
+    "🌆 Bengaluru": {
+    "feeds": [
+        {
+            "name": "Bengaluru-Google",
+            "url": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
+            "max_age_hours": 24,
+            "max_items": 10
+        }
+    ]
+},
 
-            {
-                "name": "Bengaluru-Google",
-                "url": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
-                "max_age_hours": 24,
-                "max_items": 10
-            },
+"🌆 Asansol": {
+    "feeds": [
+        {
+            "name": "Asansol-Google",
+            "url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
+            "max_age_hours": 24,
+            "max_items": 10
+        }
+    ]
+},
 
-            {
-                "name": "Asansol-Google",
-                "url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
-                "max_age_hours": 24,
-                "max_items": 10
-            },
+"🌆 Kolkata": {
+    "feeds": [
+        {
+            "name": "Kolkata-Google",
+            "url": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
+            "max_age_hours": 24,
+            "max_items": 10
+        }
+    ]
+},
 
-            {
-                "name": "Kolkata-Google",
-                "url": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
-                "max_age_hours": 24,
-                "max_items": 10
-            },
-
-            {
-                "name": "Ranchi-Google",
-                "url": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en",
-                "max_age_hours": 24,
-                "max_items": 10
-            }
-
-        ]
-    },
+"🌆 Ranchi": {
+    "feeds": [
+        {
+            "name": "Ranchi-Google",
+            "url": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en",
+            "max_age_hours": 24,
+            "max_items": 10
+        }
+    ]
+},
+       
 
     "📰 Editorial": {
         "feeds": [
@@ -109,6 +120,13 @@ CATEGORIES = {
                 "url": "https://news.google.com/rss/search?q=artificial+intelligence&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 10
+            },
+
+            {
+                "name": "Tech-BBC",
+                "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+                "max_age_hours": 24,
+                "max_items": 10
             }
 
         ]
@@ -118,8 +136,8 @@ CATEGORIES = {
         "feeds": [
 
             {
-                "name": "Business-TheHindu",
-                "url": "https://www.thehindu.com/business/feeder/default.rss",
+                "name": "Business-TimesofIndia",
+                "url": "https://timesofindia.indiatimes.com/rssfeeds/1898055.cms",
                 "max_age_hours": 24,
                 "max_items": 10
             }
