@@ -13,7 +13,7 @@ import random
 
 CATEGORIES = {
 
-    "🇮🇳 INDIA": {
+    "&#127470;&#127475; India": {
         "feeds": [
 
             {
@@ -188,8 +188,19 @@ border-radius:12px;
 box-shadow:0 4px 14px rgba(0,0,0,0.08);
 ">
 
-<h1 style="text-align:center">📰 Daily Intelligence Brief</h1>
+<h1 style="text-align:center">📰 Divya Drishti </h1>
 <p style="text-align:center;color:gray;">{today}</p>
+<div style="text-align:center;margin:15px 0;font-size:14px">
+
+<a href="#india">🇮🇳 India</a> |
+<a href="#cities">🌆 Cities</a> |
+<a href="#editorial">📰 Editorial</a> |
+<a href="#technology">💻 Technology</a> |
+<a href="#markets">📈 Markets</a>
+
+</div>
+
+<hr>
 <hr>
 """
 
@@ -238,7 +249,15 @@ for category, config in CATEGORIES.items():
     # Sort newest first
     articles.sort(reverse=True, key=lambda x: x[0])
 
-    html += f"<h2 style='margin-top:30px'>{category}</h2>"
+    html += f"<h2 id='{category_id}' style='margin-top:30px'>{category}</h2>"
+    CATEGORY_IDS = {
+    "🇮🇳 India": "india",
+    "🌆 Cities": "cities",
+    "📰 Editorial": "editorial",
+    "💻 Technology": "technology",
+    "📈 Markets": "markets"
+                    }
+    
 
     for utc_time, entry,feed_name in articles:
 
@@ -248,7 +267,7 @@ for category, config in CATEGORIES.items():
 
         card_color = random.choice(card_colors)
         headline_color = random.choice(headline_colors)
-
+        category_id = CATEGORY_IDS.get(category,"section")
         html += f"""
         <div style="
         background:{card_color};
@@ -309,7 +328,7 @@ app_password = os.environ["APP_PASSWORD"]
 msg = MIMEMultipart()
 msg["From"] = sender_email
 msg["To"] = receiver_email
-msg["Subject"] = "📰 Daily Intelligence Brief"
+msg["Subject"] = "📰 Divya Drishti "
 
 msg.attach(MIMEText(html,"html"))
 
