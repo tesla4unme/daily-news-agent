@@ -13,7 +13,7 @@ import random
 
 CATEGORIES = {
 
-    "🇮🇳 India": {
+    "India": {
         "feeds": [
 
             {
@@ -134,7 +134,7 @@ CATEGORIES = {
 # ======================================
 
 CATEGORY_IDS = {
-"🇮🇳 India": "india",
+"India": "india",
 "🌆 Cities": "cities",
 "📰 Editorial": "editorial",
 "💻 Technology": "technology",
@@ -205,7 +205,7 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 
 <div style="text-align:center;margin:15px 0;font-size:14px">
 
-<a href="#india">🇮🇳 India</a> |
+<a href="#india">India</a> |
 <a href="#cities">🌆 Cities</a> |
 <a href="#editorial">📰 Editorial</a> |
 <a href="#technology">💻 Technology</a> |
