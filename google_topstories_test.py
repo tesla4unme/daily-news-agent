@@ -14,32 +14,114 @@ import random
 CATEGORIES = {
 
     "🇮🇳 INDIA": {
-
         "feeds": [
 
             {
                 "url": "https://www.thehindu.com/news/national/feeder/default.rss",
-                "max_age_hours": 6,
+                "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
                 "url": "http://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms",
-                "max_age_hours": 6,
+                "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
                 "url": "https://news.google.com/rss/search?q=India&hl=en-IN&gl=IN&ceid=IN:en",
-                "max_age_hours": 6,
-                "max_items": 20
+                "max_age_hours": 24,
+                "max_items": 25
+            }
+
+        ]
+    },
+
+
+    "🌆 Cities": {
+        "feeds": [
+
+            {
+                "url": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
+                "max_age_hours": 24,
+                "max_items": 10
+            },
+
+            {
+                "url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
+                "max_age_hours":24,
+                "max_items": 10
+            },
+
+            {
+                "url": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
+                "max_age_hours": 24,
+                "max_items": 10
+            },
+
+            {
+                "url": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en",
+                "max_age_hours": 24,
+                "max_items": 10
+            }
+
+        ]
+    },
+
+
+    "📰 Editorial": {
+        "feeds": [
+
+            {
+                "url": "https://www.thehindu.com/opinion/editorial/feeder/default.rss",
+                "max_age_hours": 24,
+                "max_items": 10
+            },
+
+            {
+                "url": "http://blogs.timesofindia.indiatimes.com/feed/defaultrss",
+                "max_age_hours": 24,
+                "max_items": 10
+            }
+
+        ]
+    },
+
+
+    "💻 Technology": {
+        "feeds": [
+
+            {
+                "url": "https://timesofindia.indiatimes.com/technology/tech-news/rssfeeds/66949542.cms",
+                "max_age_hours": 24,
+                "max_items": 10
+            },
+
+            {
+                "url": "https://news.google.com/rss/search?q=artificial+intelligence&hl=en-IN&gl=IN&ceid=IN:en",
+                "max_age_hours": 24,
+                "max_items": 10
+            }
+
+        ]
+    },
+
+
+    "📈 Markets": {
+        "feeds": [
+
+            {
+                "url": "https://www.thehindu.com/business/feeder/default.rss",
+                "max_age_hours": 24,
+                "max_items": 10
             }
 
         ]
     }
+        ]
+    }
 
 }
-
 # ======================================
 # STYLE SETTINGS
 # ======================================
