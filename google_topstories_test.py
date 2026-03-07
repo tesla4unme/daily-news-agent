@@ -8,7 +8,8 @@ import time
 import random
 
 # -------- SETTINGS --------
-RSS_URL = "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en"
+#RSS_URL = "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en"
+RSS_URL = "https://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms"
 
 city_feeds = {
     "🌆 Bengaluru": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
