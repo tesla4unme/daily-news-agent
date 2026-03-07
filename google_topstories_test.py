@@ -20,7 +20,7 @@ CATEGORIES = {
                 "name": "National-TheHindu",
                 "url": "https://www.thehindu.com/news/national/feeder/default.rss",
                 "max_age_hours": 24,
-                "max_items": 5
+                "max_items": 1
             },
 
             {
@@ -34,7 +34,7 @@ CATEGORIES = {
                 "name": "National-Google.com",
                 "url": "https://news.google.com/rss/search?q=India&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
-                "max_items": 5
+                "max_items": 7
             }
 
         ]
@@ -92,7 +92,7 @@ CATEGORIES = {
                 "name": "Opinion-TheHindu",
                 "url": "https://www.thehindu.com/opinion/editorial/feeder/default.rss",
                 "max_age_hours": 24,
-                "max_items": 5
+                "max_items": 1
             },
 
             {
