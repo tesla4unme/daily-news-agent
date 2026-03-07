@@ -205,19 +205,13 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 
 <div style="text-align:center;margin:15px 0;font-size:14px">
 
-<div style="
-text-align:center;
-margin:20px 0;
-font-size:15px;
-font-weight:bold;
-color:#444;
-">
-
-India • Cities • Editorial • Technology • Markets
+<a href="#india">India</a> |
+<a href="#cities">🌆 Cities</a> |
+<a href="#editorial">📰 Editorial</a> |
+<a href="#technology">💻 Technology</a> |
+<a href="#markets">📈 Markets</a>
 
 </div>
-
-
 
 <hr>
 """
