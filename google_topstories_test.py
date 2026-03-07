@@ -3,7 +3,7 @@ import smtplib
 import os
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import time
 import random
 
@@ -32,51 +32,25 @@ if len(feed.entries) == 0:
     print("No news items found.")
     exit()
 
-# -------- SORT ARTICLES BY TIME --------
+# -------- FILTER & SORT MAIN ARTICLES (LAST 2 HOURS) --------
 articles = []
+now_utc = datetime.now(timezone.utc)
 
 for entry in feed.entries:
-
     if hasattr(entry, "published_parsed") and entry.published_parsed:
-        utc_time = datetime.fromtimestamp(time.mktime(entry.published_parsed))
+        # Convert to aware datetime
+        utc_time = datetime.fromtimestamp(time.mktime(entry.published_parsed), timezone.utc)
     else:
         continue
 
-    # -------- FILTER >24 HOURS --------
-    now_utc = datetime.utcnow()
-    if (now_utc - utc_time).total_seconds() > 86400:
+    # -------- FILTER > 2 HOURS (7200 Seconds) --------
+    if (now_utc - utc_time).total_seconds() > 7200:
         continue
 
     articles.append((utc_time, entry))
 
+# Sort all main news by newest first
 articles.sort(reverse=True, key=lambda x: x[0])
-
-# -------- CATEGORY KEYWORDS --------
-categories = {
-    "🌍 Geopolitics": ["america","iran","china","russia","israel","saudi","bomb","conflict","nuclear"],
-    "📈 Markets": ["market","stock","shares","profit","loss","lng","oil","gold","economy","bank"],
-    "🎬 Entertainment": ["film","movie","actor","box office","bollywood","hollywood","trailer"],
-    "🌉 Kolkata": ["kolkata","asansol","barakar","bangladesh","nepal"],
-    "🌄 Ranchi": ["ranchi","bokaro","giridih","dhanbad","jharkhand"]
-}
-
-grouped = {cat: [] for cat in categories}
-grouped["📰 Other"] = []
-
-# -------- GROUP ARTICLES --------
-for utc_time, entry in articles:
-
-    title_lower = entry.title.lower()
-    placed = False
-
-    for cat, keywords in categories.items():
-        if any(word in title_lower for word in keywords):
-            grouped[cat].append((utc_time, entry))
-            placed = True
-            break
-
-    if not placed:
-        grouped["📰 Other"].append((utc_time, entry))
 
 # -------- HEADER INFO --------
 today_date = datetime.now().strftime("%d %B %Y")
@@ -85,226 +59,104 @@ today_date = datetime.now().strftime("%d %B %Y")
 html_content = f"""
 <html>
 <body style="font-family:Arial, sans-serif;background:#f4f6f8;padding:20px;">
-
-<div style="
-max-width:760px;
-margin:auto;
-background:white;
-padding:25px;
-border-radius:12px;
-box-shadow:0 4px 14px rgba(0,0,0,0.08);
-">
-
-<h1 style="text-align:center;margin-bottom:5px;">
-📰 News India
-</h1>
-
-<p style="text-align:center;color:gray;">
-{today_date} • TOTAL_COUNT headlines
-</p>
-
+<div style="max-width:760px;margin:auto;background:white;padding:25px;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.08);">
+<h1 style="text-align:center;margin-bottom:5px;">📰 News India</h1>
+<p style="text-align:center;color:gray;">{today_date} • Last 2 Hours</p>
 <hr>
 """
 
 count = 1
 
-# -------- CITY NEWS SECTIONS --------
+# -------- CITY NEWS SECTIONS (KEEP ORIGINAL LOGIC) --------
 for city, url in city_feeds.items():
-
     city_feed = feedparser.parse(url)
-
     if len(city_feed.entries) == 0:
         continue
 
-    # collect city articles
     city_articles = []
-
     for entry in city_feed.entries:
-
         if hasattr(entry, "published_parsed") and entry.published_parsed:
-            utc_time = datetime.fromtimestamp(time.mktime(entry.published_parsed))
+            utc_time = datetime.fromtimestamp(time.mktime(entry.published_parsed), timezone.utc)
         else:
-            
             continue
-
-        # -------- FILTER >24 HOURS --------
-        now_utc = datetime.utcnow()
+        
+        # City feeds kept at 24h filter as per original logic
         if (now_utc - utc_time).total_seconds() > 86400:
             continue
-
         city_articles.append((utc_time, entry))
 
-    # sort newest first
     city_articles.sort(reverse=True, key=lambda x: x[0])
 
     html_content += f"<h2 style='margin-top:35px;color:#333;'>{city}</h2>"
 
-    for utc_time, entry in city_articles[:5]:
-
+    for utc_time, entry in city_articles[:10]:
         ist_time = utc_time + timedelta(hours=5, minutes=30)
-        now_ist = datetime.utcnow() + timedelta(hours=5, minutes=30)
-
+        now_ist = datetime.now(timezone.utc) + timedelta(hours=5, minutes=30)
         age = now_ist - ist_time
-        hours = int(age.total_seconds() // 3600)
-        minutes = int((age.total_seconds() % 3600) // 60)
-
-        if hours > 0:
-            age_label = f"{hours}h ago"
-        else:
-            age_label = f"{minutes}m ago"
-
+        hours, remainder = divmod(int(age.total_seconds()), 3600)
+        minutes = remainder // 60
+        age_label = f"{hours}h ago" if hours > 0 else f"{minutes}m ago"
         formatted_time = ist_time.strftime("%d %b %Y • %H:%M IST")
-
         publisher = entry.source.title if hasattr(entry,"source") else "Unknown Source"
-
         card_color = random.choice(card_colors)
         headline_color = random.choice(headline_colors)
 
         html_content += f"""
-        <div style="
-        background:{card_color};
-        padding:15px;
-        margin-bottom:12px;
-        border-radius:8px;
-        border:1px solid #e6e6e6;
-        border-left:4px solid #1a73e8;
-        ">
-
-        <b>{count}. <a href="{entry.link}" style="
-        text-decoration:none;
-        color:{headline_color};
-        font-size:17px;
-        line-height:1.35;
-        ">
-        {entry.title}
-        </a></b>
-
+        <div style="background:{card_color};padding:15px;margin-bottom:12px;border-radius:8px;border:1px solid #e6e6e6;border-left:4px solid #1a73e8;">
+        <b>{count}. <a href="{entry.link}" style="text-decoration:none;color:{headline_color};font-size:17px;line-height:1.35;">{entry.title}</a></b>
         <br><br>
-
-        <span style="
-        font-size:12px;
-        color:#666;
-        background:#eef2f7;
-        padding:3px 7px;
-        border-radius:4px;
-        ">
-        {publisher} • {formatted_time} • {age_label}
-        </span>
-
+        <span style="font-size:12px;color:#666;background:#eef2f7;padding:3px 7px;border-radius:4px;">{publisher} • {formatted_time} • {age_label}</span>
         </div>
         """
-
         count += 1
+
+# -------- MAIN FEED SECTION (FLATTENED & RECENT) --------
+if articles:
+    html_content += "<h2 style='margin-top:35px;color:#333;'>🔥 Latest Breaking News</h2>"
+    
+    for utc_time, entry in articles:
+        ist_time = utc_time + timedelta(hours=5, minutes=30)
+        now_ist = datetime.now(timezone.utc) + timedelta(hours=5, minutes=30)
+        age = now_ist - ist_time
+        minutes = int(age.total_seconds() // 60)
+        age_label = f"{minutes}m ago"
         
-# -------- BUILD STORY CARDS --------
-for category, items in grouped.items():
-
-    if len(items) == 0:
-        continue
-
-    html_content += f"<h2 style='margin-top:35px;color:#333;'>{category}</h2>"
-
-    for utc_time, entry in items:
-
-        if utc_time != datetime.min:
-            ist_time = utc_time + timedelta(hours=5, minutes=30)
-            now_ist = datetime.utcnow() + timedelta(hours=5, minutes=30)
-
-            age = now_ist - ist_time
-            hours = int(age.total_seconds() // 3600)
-            minutes = int((age.total_seconds() % 3600) // 60)
-
-            if hours > 0:
-                age_label = f"{hours}h ago"
-            else:
-                age_label = f"{minutes}m ago"
-
-            formatted_time = ist_time.strftime("%d %b %Y • %H:%M IST")
-
-        else:
-            formatted_time = "Time not available"
-            age_label = ""
-
+        formatted_time = ist_time.strftime("%H:%M IST")
         publisher = entry.source.title if hasattr(entry,"source") else "Unknown Source"
-
         card_color = random.choice(card_colors)
         headline_color = random.choice(headline_colors)
 
         html_content += f"""
-        <div style="
-        background:{card_color};
-        padding:15px;
-        margin-bottom:12px;
-        border-radius:8px;
-        border:1px solid #e6e6e6;
-        border-left:4px solid #1a73e8;
-        ">
-
-        <b>{count}. <a href="{entry.link}" style="
-        text-decoration:none;       
-        color:{headline_color};
-        font-size:17px;
-        line-height:1.35;
-        ">
-        {entry.title}
-        </a></b>
-
+        <div style="background:{card_color};padding:15px;margin-bottom:12px;border-radius:8px;border:1px solid #e6e6e6;border-left:4px solid #d32f2f;">
+        <b>{count}. <a href="{entry.link}" style="text-decoration:none;color:{headline_color};font-size:17px;line-height:1.35;">{entry.title}</a></b>
         <br><br>
-
-        <span style="
-        font-size:12px;
-        color:#666;
-        background:#eef2f7;
-        padding:3px 7px;
-        border-radius:4px;
-        ">
-        {publisher} • {formatted_time} • {age_label}
-        </span>
-
+        <span style="font-size:12px;color:#666;background:#fdeaea;padding:3px 7px;border-radius:4px;">{publisher} • {formatted_time} • {age_label}</span>
         </div>
         """
-
         count += 1
 
 html_content += """
 <hr>
-
-<p style="
-font-size:12px;
-color:gray;
-text-align:center;
-">
-Source: Google News India RSS
-</p>
-
+<p style="font-size:12px;color:gray;text-align:center;">Source: Google News India RSS</p>
 </div>
 </body>
 </html>
 """
-
-html_content = html_content.replace(
-    "TOTAL_COUNT",
-    str(count - 1)
-)
 
 # -------- EMAIL CONFIG --------
 sender_email = os.environ["SENDER_EMAIL"]
 receiver_email = os.environ["RECEIVER_EMAIL"]
 app_password = os.environ["APP_PASSWORD"]
 
-subject = "📰 News India"
-
 msg = MIMEMultipart()
 msg["From"] = sender_email
 msg["To"] = receiver_email
-msg["Subject"] = subject
-
+msg["Subject"] = f"📰 News India Digest ({datetime.now().strftime('%H:%M')})"
 msg.attach(MIMEText(html_content, "html"))
 
-# -------- SEND EMAIL --------
 with smtplib.SMTP("smtp.gmail.com", 587) as server:
     server.starttls()
     server.login(sender_email, app_password)
     server.sendmail(sender_email, receiver_email, msg.as_string())
 
-print("Email sent successfully.")
+print(f"Email sent successfully with {count-1} articles.")
