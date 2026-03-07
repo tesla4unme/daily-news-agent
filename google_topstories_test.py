@@ -13,7 +13,7 @@ import random
 
 CATEGORIES = {
 
-    "&#127470;&#127475; India": {
+    "🇮🇳 India": {
         "feeds": [
 
             {
@@ -44,28 +44,28 @@ CATEGORIES = {
         "feeds": [
 
             {
-                "name": "Bengaluru-Google.com",
+                "name": "Bengaluru-Google",
                 "url": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
-                "name": "Asansol-Google.com",
+                "name": "Asansol-Google",
                 "url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
-                "name": "Kolkata-Google.com",
+                "name": "Kolkata-Google",
                 "url": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
-                "name": "Ranchi-Google.com",
+                "name": "Ranchi-Google",
                 "url": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 10
@@ -105,7 +105,7 @@ CATEGORIES = {
             },
 
             {
-                "name": "AI-Google.com",
+                "name": "AI-Google",
                 "url": "https://news.google.com/rss/search?q=artificial+intelligence&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 10
@@ -130,6 +130,18 @@ CATEGORIES = {
 }
 
 # ======================================
+# CATEGORY ANCHORS
+# ======================================
+
+CATEGORY_IDS = {
+"🇮🇳 India": "india",
+"🌆 Cities": "cities",
+"📰 Editorial": "editorial",
+"💻 Technology": "technology",
+"📈 Markets": "markets"
+}
+
+# ======================================
 # STYLE SETTINGS
 # ======================================
 
@@ -144,7 +156,7 @@ card_colors = [
 ]
 
 # ======================================
-# TIME FORMAT FUNCTION
+# TIME FORMAT
 # ======================================
 
 def format_age(utc_time):
@@ -170,7 +182,7 @@ def format_age(utc_time):
     return formatted_time, age_label
 
 # ======================================
-# BUILD EMAIL HEADER
+# EMAIL HEADER
 # ======================================
 
 today = datetime.now().strftime("%d %B %Y")
@@ -188,8 +200,9 @@ border-radius:12px;
 box-shadow:0 4px 14px rgba(0,0,0,0.08);
 ">
 
-<h1 style="text-align:center">📰 Divya Drishti </h1>
+<h1 style="text-align:center">📰 Divya Drishti</h1>
 <p style="text-align:center;color:gray;">{today}</p>
+
 <div style="text-align:center;margin:15px 0;font-size:14px">
 
 <a href="#india">🇮🇳 India</a> |
@@ -200,7 +213,6 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 
 </div>
 
-<hr>
 <hr>
 """
 
@@ -240,26 +252,19 @@ for category, config in CATEGORIES.items():
                 if age_hours > max_age:
                     continue
 
-                articles.append((utc_time, entry,feed_name))
+                articles.append((utc_time, entry, feed_name))
                 items_added += 1
 
     if len(articles) == 0:
         continue
 
-    # Sort newest first
     articles.sort(reverse=True, key=lambda x: x[0])
 
-    html += f"<h2 id='{category_id}' style='margin-top:30px'>{category}</h2>"
-    CATEGORY_IDS = {
-    "🇮🇳 India": "india",
-    "🌆 Cities": "cities",
-    "📰 Editorial": "editorial",
-    "💻 Technology": "technology",
-    "📈 Markets": "markets"
-                    }
-    
+    category_id = CATEGORY_IDS.get(category,"section")
 
-    for utc_time, entry,feed_name in articles:
+    html += f"<h2 id='{category_id}' style='margin-top:30px'>{category}</h2>"
+
+    for utc_time, entry, feed_name in articles:
 
         formatted_time, age = format_age(utc_time)
 
@@ -267,7 +272,7 @@ for category, config in CATEGORIES.items():
 
         card_color = random.choice(card_colors)
         headline_color = random.choice(headline_colors)
-        category_id = CATEGORY_IDS.get(category,"section")
+
         html += f"""
         <div style="
         background:{card_color};
@@ -297,6 +302,7 @@ for category, config in CATEGORIES.items():
         ">
         {publisher} • {formatted_time} • {age} • 
         <span style="color:#ef6c00">{feed_name}</span>
+        </span>
 
         </div>
         """
@@ -318,7 +324,7 @@ Generated from RSS feeds
 """
 
 # ======================================
-# EMAIL SEND
+# SEND EMAIL
 # ======================================
 
 sender_email = os.environ["SENDER_EMAIL"]
@@ -328,7 +334,7 @@ app_password = os.environ["APP_PASSWORD"]
 msg = MIMEMultipart()
 msg["From"] = sender_email
 msg["To"] = receiver_email
-msg["Subject"] = "📰 Divya Drishti "
+msg["Subject"] = "📰 Divya Drishti"
 
 msg.attach(MIMEText(html,"html"))
 
