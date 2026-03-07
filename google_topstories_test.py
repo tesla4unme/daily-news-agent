@@ -20,21 +20,21 @@ CATEGORIES = {
                 "name": "National-TheHindu",
                 "url": "https://www.thehindu.com/news/national/feeder/default.rss",
                 "max_age_hours": 24,
-                "max_items": 10
+                "max_items": 5
             },
 
             {
                 "name": "National-TimesofIndia",
                 "url": "http://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms",
                 "max_age_hours": 24,
-                "max_items": 10
+                "max_items": 5
             },
 
             {
                 "name": "National-Google.com",
                 "url": "https://news.google.com/rss/search?q=India&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
-                "max_items": 15
+                "max_items": 5
             }
 
         ]
@@ -46,7 +46,7 @@ CATEGORIES = {
             "name": "Bengaluru-Google",
             "url": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 10
+            "max_items": 7
         }
     ]
 },
@@ -57,7 +57,7 @@ CATEGORIES = {
             "name": "Asansol-Google",
             "url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 10
+            "max_items": 5
         }
     ]
 },
@@ -68,7 +68,7 @@ CATEGORIES = {
             "name": "Kolkata-Google",
             "url": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 10
+            "max_items": 3
         }
     ]
 },
@@ -79,7 +79,7 @@ CATEGORIES = {
             "name": "Ranchi-Google",
             "url": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 10
+            "max_items": 2
         }
     ]
 },
@@ -92,14 +92,14 @@ CATEGORIES = {
                 "name": "Opinion-TheHindu",
                 "url": "https://www.thehindu.com/opinion/editorial/feeder/default.rss",
                 "max_age_hours": 24,
-                "max_items": 10
+                "max_items": 5
             },
 
             {
                 "name": "Blog-TimesofIndia",
                 "url": "http://blogs.timesofindia.indiatimes.com/feed/defaultrss",
                 "max_age_hours": 24,
-                "max_items": 10
+                "max_items": 5
             }
 
         ]
@@ -112,21 +112,21 @@ CATEGORIES = {
                 "name": "Tech-TimesofIndia",
                 "url": "https://timesofindia.indiatimes.com/technology/tech-news/rssfeeds/66949542.cms",
                 "max_age_hours": 24,
-                "max_items": 10
+                "max_items": 5
             },
 
             {
                 "name": "AI-Google",
                 "url": "https://news.google.com/rss/search?q=artificial+intelligence&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
-                "max_items": 10
+                "max_items": 5
             },
 
             {
                 "name": "Tech-BBC",
                 "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
                 "max_age_hours": 24,
-                "max_items": 10
+                "max_items": 5
             }
 
         ]
@@ -139,7 +139,7 @@ CATEGORIES = {
                 "name": "Business-TimesofIndia",
                 "url": "https://timesofindia.indiatimes.com/rssfeeds/1898055.cms",
                 "max_age_hours": 24,
-                "max_items": 10
+                "max_items": 5
             }
 
         ]
