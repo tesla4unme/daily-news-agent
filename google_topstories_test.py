@@ -37,7 +37,6 @@ CATEGORIES = {
         ]
     },
 
-
     "🌆 Cities": {
         "feeds": [
 
@@ -49,7 +48,7 @@ CATEGORIES = {
 
             {
                 "url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
-                "max_age_hours":24,
+                "max_age_hours": 24,
                 "max_items": 10
             },
 
@@ -67,7 +66,6 @@ CATEGORIES = {
 
         ]
     },
-
 
     "📰 Editorial": {
         "feeds": [
@@ -87,7 +85,6 @@ CATEGORIES = {
         ]
     },
 
-
     "💻 Technology": {
         "feeds": [
 
@@ -106,7 +103,6 @@ CATEGORIES = {
         ]
     },
 
-
     "📈 Markets": {
         "feeds": [
 
@@ -118,9 +114,8 @@ CATEGORIES = {
 
         ]
     }
-        ]
-    }
 
+}
 
 # ======================================
 # STYLE SETTINGS
