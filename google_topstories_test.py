@@ -17,21 +17,21 @@ CATEGORIES = {
         "feeds": [
 
             {
-                "name": "national thehindu",
+                "name": "National-TheHindu",
                 "url": "https://www.thehindu.com/news/national/feeder/default.rss",
                 "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
-                "name": "national timesofindia",
+                "name": "National-TimesofIndia",
                 "url": "http://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms",
                 "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
-                "name": "national google",
+                "name": "National-Google.com",
                 "url": "https://news.google.com/rss/search?q=India&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 25
@@ -44,28 +44,28 @@ CATEGORIES = {
         "feeds": [
 
             {
-                "name": "Bengaluru google",
+                "name": "Bengaluru-Google.com",
                 "url": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
-                "name": "Asansol google",
+                "name": "Asansol-Google.com",
                 "url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
-                "name": "Kolkata google",
+                "name": "Kolkata-Google.com",
                 "url": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
-                "name": "Ranchi google",
+                "name": "Ranchi-Google.com",
                 "url": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 10
@@ -78,14 +78,14 @@ CATEGORIES = {
         "feeds": [
 
             {
-                "name": "opinion thehindu",
+                "name": "Opinion-TheHindu",
                 "url": "https://www.thehindu.com/opinion/editorial/feeder/default.rss",
                 "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
-                "name": "blog timesofindia",
+                "name": "Blog-TimesofIndia",
                 "url": "http://blogs.timesofindia.indiatimes.com/feed/defaultrss",
                 "max_age_hours": 24,
                 "max_items": 10
@@ -98,14 +98,14 @@ CATEGORIES = {
         "feeds": [
 
             {
-                "name": "Tech timesofindia",
+                "name": "Tech-TimesofIndia",
                 "url": "https://timesofindia.indiatimes.com/technology/tech-news/rssfeeds/66949542.cms",
                 "max_age_hours": 24,
                 "max_items": 10
             },
 
             {
-                "name": "AI google",
+                "name": "AI-Google.com",
                 "url": "https://news.google.com/rss/search?q=artificial+intelligence&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 10
@@ -118,7 +118,7 @@ CATEGORIES = {
         "feeds": [
 
             {
-                "name": "business thehindu",
+                "name": "Business-TheHindu",
                 "url": "https://www.thehindu.com/business/feeder/default.rss",
                 "max_age_hours": 24,
                 "max_items": 10
@@ -276,8 +276,8 @@ for category, config in CATEGORIES.items():
         padding:3px 7px;
         border-radius:4px;
         ">
-        {publisher} • {formatted_time} • {age} • {feed_name}
-        <span style="color:#999">{feed_name}</span>
+        {publisher} • {formatted_time} • {age} • 
+        <span style="color:#ef6c00">{feed_name}</span>
 
         </div>
         """
