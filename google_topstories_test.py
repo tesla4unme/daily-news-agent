@@ -7,16 +7,61 @@ from datetime import datetime, timedelta
 import time
 import random
 
-# -------- SETTINGS --------
-#RSS_URL = "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en"
-RSS_URL = "https://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms"
+# ===============================
+# CONFIGURATION
+# ===============================
 
-city_feeds = {
-    "🌆 Bengaluru": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
-    "🏭 Asansol": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
-    "🌉 Kolkata": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
-    "🌄 Ranchi": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en"
+CATEGORIES = {
+    "🇮🇳 INDIA": {
+        "limit": None,
+        "feeds": [
+            "https://www.thehindu.com/news/national/feeder/default.rss",
+            "http://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms",
+            "https://news.google.com/rss/search?q=India&hl=en-IN&gl=IN&ceid=IN:en"
+        ]
+    },
+
+    "🌆 Cities": {
+        "limit": None,
+        "feeds": [
+            "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
+            "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
+            "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
+            "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en"
+        ]
+    },
+
+    "📰 Editorial": {
+        "limit": None,
+        "feeds": [
+            "https://www.thehindu.com/opinion/editorial/feeder/default.rss",
+            "http://blogs.timesofindia.indiatimes.com/feed/defaultrss"
+        ]
+    },
+
+    "💻 Technology": {
+        "limit": None,
+        "feeds": [
+            "https://timesofindia.indiatimes.com/technology/tech-news/rssfeeds/66949542.cms"
+        ]
+    },
+
+    "📈 Markets": {
+        "limit": None,
+        "feeds": [
+            "https://www.thehindu.com/business/feeder/default.rss"
+        ]
+    },
+
+    "🕉 Bhagavad Gita Sloka": {
+        "limit": 1,
+        "feeds": []  # placeholder
+    }
 }
+
+# ===============================
+# STYLE SETTINGS
+# ===============================
 
 headline_colors = [
 "#1a73e8","#c62828","#2e7d32","#6a1b9a",
@@ -28,65 +73,41 @@ card_colors = [
 "#fff6ed","#f0fafa","#f7f7f7","#fffbea"
 ]
 
-# -------- FETCH MAIN FEED --------
-feed = feedparser.parse(RSS_URL)
+# ===============================
+# TIME FUNCTION
+# ===============================
 
-if len(feed.entries) == 0:
-    print("No news items found.")
-    exit()
+def format_age(utc_time):
 
-# -------- SORT ARTICLES BY TIME --------
-articles = []
+    ist_time = utc_time + timedelta(hours=5, minutes=30)
+    now = datetime.utcnow() + timedelta(hours=5, minutes=30)
 
-for entry in feed.entries:
+    age = now - ist_time
 
-    if hasattr(entry, "published_parsed") and entry.published_parsed:
-        utc_time = datetime.fromtimestamp(time.mktime(entry.published_parsed))
+    minutes = int(age.total_seconds() / 60)
+    hours = int(minutes / 60)
+    days = int(hours / 24)
+
+    if minutes < 60:
+        age_label = f"{minutes}m ago"
+    elif hours < 24:
+        age_label = f"{hours}h ago"
     else:
-        continue
+        age_label = f"{days}d ago"
 
-    # -------- FILTER >24 HOURS --------
-    now_utc = datetime.utcnow()
-    if (now_utc - utc_time).total_seconds() > 86400:
-        continue
+    formatted_time = ist_time.strftime("%d %b %Y • %H:%M IST")
 
-    articles.append((utc_time, entry))
+    return formatted_time, age_label
 
-articles.sort(reverse=True, key=lambda x: x[0])
+# ===============================
+# BUILD EMAIL HEADER
+# ===============================
 
-# -------- CATEGORY KEYWORDS --------
-categories = {
-    "🌍 Geopolitics": ["war","iran","china","russia","israel","military","conflict","nuclear"],
-    "📈 Markets": ["market","stock","shares","profit","loss","lng","oil","gold","economy","bank"],
-    "🧬 Software": ["artificial","chatgpt","gemini","anthropic","claude","co-pilot","ai "],    
-    "🎬 Entertainment": ["film","movie","actor","box office","bollywood","hollywood","trailer"]
-}
+today = datetime.now().strftime("%d %B %Y")
 
-grouped = {cat: [] for cat in categories}
-grouped["📰 Other"] = []
-
-# -------- GROUP ARTICLES --------
-for utc_time, entry in articles:
-
-    title_lower = entry.title.lower()
-    placed = False
-
-    for cat, keywords in categories.items():
-        if any(word in title_lower for word in keywords):
-            grouped[cat].append((utc_time, entry))
-            placed = True
-            break
-
-    if not placed:
-        grouped["📰 Other"].append((utc_time, entry))
-
-# -------- HEADER INFO --------
-today_date = datetime.now().strftime("%d %B %Y")
-
-# -------- BUILD EMAIL --------
-html_content = f"""
+html = f"""
 <html>
-<body style="font-family:Arial, sans-serif;background:#f4f6f8;padding:20px;">
+<body style="font-family:Arial;background:#f4f6f8;padding:20px;">
 
 <div style="
 max-width:760px;
@@ -97,72 +118,75 @@ border-radius:12px;
 box-shadow:0 4px 14px rgba(0,0,0,0.08);
 ">
 
-<h1 style="text-align:center;margin-bottom:5px;">
-📰 News India
-</h1>
-
-<p style="text-align:center;color:gray;">
-{today_date} • TOTAL_COUNT headlines
-</p>
-
+<h1 style="text-align:center">📰 Daily Intelligence Brief</h1>
+<p style="text-align:center;color:gray;">{today}</p>
 <hr>
 """
 
 count = 1
 
-# -------- CITY NEWS SECTIONS --------
-for city, url in city_feeds.items():
+# ===============================
+# PROCESS EACH CATEGORY
+# ===============================
 
-    city_feed = feedparser.parse(url)
+for category, config in CATEGORIES.items():
 
-    if len(city_feed.entries) == 0:
+    feeds = config["feeds"]
+    limit = config["limit"]
+
+    articles = []
+
+    for url in feeds:
+
+        feed = feedparser.parse(url)
+
+        for entry in feed.entries:
+
+            if hasattr(entry, "published_parsed") and entry.published_parsed:
+                utc_time = datetime.fromtimestamp(time.mktime(entry.published_parsed))
+            else:
+                continue
+
+            articles.append((utc_time, entry))
+
+    if len(articles) == 0 and category != "🕉 Bhagavad Gita Sloka":
         continue
 
-    # collect city articles
-    city_articles = []
+    # Sort newest first
+    articles.sort(reverse=True, key=lambda x: x[0])
 
-    for entry in city_feed.entries:
+    html += f"<h2 style='margin-top:30px'>{category}</h2>"
 
-        if hasattr(entry, "published_parsed") and entry.published_parsed:
-            utc_time = datetime.fromtimestamp(time.mktime(entry.published_parsed))
-        else:
-            
-            continue
+    # Placeholder for Gita Sloka
+    if category == "🕉 Bhagavad Gita Sloka":
+        html += """
+        <div style="
+        background:#fffbea;
+        padding:15px;
+        border-radius:8px;
+        border:1px solid #eee;
+        margin-bottom:12px;
+        ">
+        Bhagavad Gita Sloka will appear here (future code).
+        </div>
+        """
+        continue
 
-        # -------- FILTER >24 HOURS --------
-        now_utc = datetime.utcnow()
-        if (now_utc - utc_time).total_seconds() > 86400:
-            continue
+    shown = 0
 
-        city_articles.append((utc_time, entry))
+    for utc_time, entry in articles:
 
-    # sort newest first
-    city_articles.sort(reverse=True, key=lambda x: x[0])
+        if limit and shown >= limit:
+            break
 
-    html_content += f"<h2 style='margin-top:35px;color:#333;'>{city}</h2>"
-
-    for utc_time, entry in city_articles[:10]:
-
-        ist_time = utc_time + timedelta(hours=5, minutes=30)
-        now_ist = datetime.utcnow() + timedelta(hours=5, minutes=30)
-
-        age = now_ist - ist_time
-        hours = int(age.total_seconds() // 3600)
-        minutes = int((age.total_seconds() % 3600) // 60)
-
-        if hours > 0:
-            age_label = f"{hours}h ago"
-        else:
-            age_label = f"{minutes}m ago"
-
-        formatted_time = ist_time.strftime("%d %b %Y • %H:%M IST")
+        formatted_time, age = format_age(utc_time)
 
         publisher = entry.source.title if hasattr(entry,"source") else "Unknown Source"
 
         card_color = random.choice(card_colors)
         headline_color = random.choice(headline_colors)
 
-        html_content += f"""
+        html += f"""
         <div style="
         background:{card_color};
         padding:15px;
@@ -176,7 +200,6 @@ for city, url in city_feeds.items():
         text-decoration:none;
         color:{headline_color};
         font-size:17px;
-        line-height:1.35;
         ">
         {entry.title}
         </a></b>
@@ -190,123 +213,47 @@ for city, url in city_feeds.items():
         padding:3px 7px;
         border-radius:4px;
         ">
-        {publisher} • {formatted_time} • {age_label}
+        {publisher} • {formatted_time} • {age}
         </span>
 
         </div>
         """
 
         count += 1
-        
-# -------- BUILD STORY CARDS --------
-for category, items in grouped.items():
+        shown += 1
 
-    if len(items) == 0:
-        continue
+# ===============================
+# EMAIL FOOTER
+# ===============================
 
-    html_content += f"<h2 style='margin-top:35px;color:#333;'>{category}</h2>"
-
-    for utc_time, entry in items:
-
-        if utc_time != datetime.min:
-            ist_time = utc_time + timedelta(hours=5, minutes=30)
-            now_ist = datetime.utcnow() + timedelta(hours=5, minutes=30)
-
-            age = now_ist - ist_time
-            hours = int(age.total_seconds() // 3600)
-            minutes = int((age.total_seconds() % 3600) // 60)
-
-            if hours > 0:
-                age_label = f"{hours}h ago"
-            else:
-                age_label = f"{minutes}m ago"
-
-            formatted_time = ist_time.strftime("%d %b %Y • %H:%M IST")
-
-        else:
-            formatted_time = "Time not available"
-            age_label = ""
-
-        publisher = entry.source.title if hasattr(entry,"source") else "Unknown Source"
-
-        card_color = random.choice(card_colors)
-        headline_color = random.choice(headline_colors)
-
-        html_content += f"""
-        <div style="
-        background:{card_color};
-        padding:15px;
-        margin-bottom:12px;
-        border-radius:8px;
-        border:1px solid #e6e6e6;
-        border-left:4px solid #1a73e8;
-        ">
-
-        <b>{count}. <a href="{entry.link}" style="
-        text-decoration:none;       
-        color:{headline_color};
-        font-size:17px;
-        line-height:1.35;
-        ">
-        {entry.title}
-        </a></b>
-
-        <br><br>
-
-        <span style="
-        font-size:12px;
-        color:#666;
-        background:#eef2f7;
-        padding:3px 7px;
-        border-radius:4px;
-        ">
-        {publisher} • {formatted_time} • {age_label}
-        </span>
-
-        </div>
-        """
-
-        count += 1
-
-html_content += """
+html += """
 <hr>
-
-<p style="
-font-size:12px;
-color:gray;
-text-align:center;
-">
-Source: Google News India RSS
+<p style="font-size:12px;color:gray;text-align:center">
+Generated from RSS feeds
 </p>
-
 </div>
 </body>
 </html>
 """
 
-html_content = html_content.replace(
-    "TOTAL_COUNT",
-    str(count - 1)
-)
+# ===============================
+# EMAIL SEND
+# ===============================
 
-# -------- EMAIL CONFIG --------
 sender_email = os.environ["SENDER_EMAIL"]
 receiver_email = os.environ["RECEIVER_EMAIL"]
 app_password = os.environ["APP_PASSWORD"]
 
-subject = "📰 News India"
-
 msg = MIMEMultipart()
 msg["From"] = sender_email
 msg["To"] = receiver_email
-msg["Subject"] = subject
+msg["Subject"] = "📰 Daily Intelligence Brief"
 
-msg.attach(MIMEText(html_content, "html"))
+msg.attach(MIMEText(html,"html"))
 
-# -------- SEND EMAIL --------
-with smtplib.SMTP("smtp.gmail.com", 587) as server:
+with smtplib.SMTP("smtp.gmail.com",587) as server:
     server.starttls()
-    server.login(sender_email, app_password)
-    server.sendmail(sender_email, receiver_email, msg.as_string())
+    server.login(sender_email,app_password)
+    server.sendmail(sender_email,receiver_email,msg.as_string())
 
 print("Email sent successfully.")
