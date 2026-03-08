@@ -1,6 +1,7 @@
 import feedparser
 import smtplib
 import os
+import json
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
@@ -8,159 +9,158 @@ import time
 import random
 
 # ======================================
+# SEEN NEWS FILE
+# ======================================
+
+SEEN_FILE = "seen_news.json"
+
+if os.path.exists(SEEN_FILE):
+    with open(SEEN_FILE, "r") as f:
+        seen_news = set(json.load(f))
+else:
+    seen_news = set()
+
+# ======================================
 # CONFIGURATION
 # ======================================
 
 CATEGORIES = {
 
-    "India": {
-        "feeds": [
+"India": {
+"feeds": [
 
-            {
-                "name": "National-TheHindu",
-                "url": "https://www.thehindu.com/news/national/feeder/default.rss",
-                "max_age_hours": 24,
-                "max_items": 1
-            },
+{
+"name": "National-TheHindu",
+"url": "https://www.thehindu.com/news/national/feeder/default.rss",
+"max_age_hours": 24,
+"max_items": 1
+},
 
-            {
-                "name": "National-TimesofIndia",
-                "url": "http://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms",
-                "max_age_hours": 24,
-                "max_items": 5
-            },
+{
+"name": "National-TimesofIndia",
+"url": "http://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms",
+"max_age_hours": 24,
+"max_items": 5
+},
 
-            {
-                "name": "National-Google.com",
-                "url": "https://news.google.com/rss/search?q=India&hl=en-IN&gl=IN&ceid=IN:en",
-                "max_age_hours": 24,
-                "max_items": 7
-            }
+{
+"name": "National-Google.com",
+"url": "https://news.google.com/rss/search?q=India&hl=en-IN&gl=IN&ceid=IN:en",
+"max_age_hours": 24,
+"max_items": 7
+}
 
-        ]
-    },
+]
+},
 
-    "🌆 Bengaluru": {
-    "feeds": [
-        {
-            "name": "Bengaluru-Google",
-            "url": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
-            "max_age_hours": 24,
-            "max_items": 7
-        }
-    ]
+"🌆 Bengaluru": {
+"feeds": [
+{
+"name": "Bengaluru-Google",
+"url": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
+"max_age_hours": 24,
+"max_items": 7
+}
+]
 },
 
 "🌆 Asansol": {
-    "feeds": [
-        {
-            "name": "Asansol-Google",
-            "url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
-            "max_age_hours": 24,
-            "max_items": 5
-        }
-    ]
+"feeds": [
+{
+"name": "Asansol-Google",
+"url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
+"max_age_hours": 24,
+"max_items": 5
+}
+]
 },
 
 "🌆 Kolkata": {
-    "feeds": [
-        {
-            "name": "Kolkata-Google",
-            "url": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
-            "max_age_hours": 24,
-            "max_items": 3
-        }
-    ]
+"feeds": [
+{
+"name": "Kolkata-Google",
+"url": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
+"max_age_hours": 24,
+"max_items": 3
+}
+]
 },
 
 "🌆 Ranchi": {
-    "feeds": [
-        {
-            "name": "Ranchi-Google",
-            "url": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en",
-            "max_age_hours": 24,
-            "max_items": 2
-        }
-    ]
+"feeds": [
+{
+"name": "Ranchi-Google",
+"url": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en",
+"max_age_hours": 24,
+"max_items": 2
+}
+]
 },
-       
 
-    "📰 Editorial": {
-        "feeds": [
+"📰 Editorial": {
+"feeds": [
 
-            {
-                "name": "Opinion-TheHindu",
-                "url": "https://www.thehindu.com/opinion/editorial/feeder/default.rss",
-                "max_age_hours": 24,
-                "max_items": 1
-            },
+{
+"name": "Opinion-TheHindu",
+"url": "https://www.thehindu.com/opinion/editorial/feeder/default.rss",
+"max_age_hours": 24,
+"max_items": 1
+},
 
-            {
-                "name": "Blog-TimesofIndia",
-                "url": "http://blogs.timesofindia.indiatimes.com/feed/defaultrss",
-                "max_age_hours": 24,
-                "max_items": 5
-            }
+{
+"name": "Blog-TimesofIndia",
+"url": "http://blogs.timesofindia.indiatimes.com/feed/defaultrss",
+"max_age_hours": 24,
+"max_items": 5
+}
 
-        ]
-    },
+]
+},
 
-    "💻 Technology": {
-        "feeds": [
+"💻 Technology": {
+"feeds": [
 
-            {
-                "name": "Tech-TimesofIndia",
-                "url": "https://timesofindia.indiatimes.com/technology/tech-news/rssfeeds/66949542.cms",
-                "max_age_hours": 24,
-                "max_items": 5
-            },
+{
+"name": "Tech-TimesofIndia",
+"url": "https://timesofindia.indiatimes.com/technology/tech-news/rssfeeds/66949542.cms",
+"max_age_hours": 24,
+"max_items": 5
+},
 
-            {
-                "name": "AI-Google",
-                "url": "https://news.google.com/rss/search?q=artificial+intelligence&hl=en-IN&gl=IN&ceid=IN:en",
-                "max_age_hours": 24,
-                "max_items": 5
-            },
+{
+"name": "AI-Google",
+"url": "https://news.google.com/rss/search?q=artificial+intelligence&hl=en-IN&gl=IN&ceid=IN:en",
+"max_age_hours": 24,
+"max_items": 5
+},
 
-            {
-                "name": "Tech-BBC",
-                "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
-                "max_age_hours": 24,
-                "max_items": 5
-            }
+{
+"name": "Tech-BBC",
+"url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+"max_age_hours": 24,
+"max_items": 5
+}
 
-        ]
-    },
+]
+},
 
-    "📈 Markets": {
-        "feeds": [
+"📈 Markets": {
+"feeds": [
 
-            {
-                "name": "Business-TimesofIndia",
-                "url": "https://timesofindia.indiatimes.com/rssfeeds/1898055.cms",
-                "max_age_hours": 24,
-                "max_items": 5
-            }
+{
+"name": "Business-TimesofIndia",
+"url": "https://timesofindia.indiatimes.com/rssfeeds/1898055.cms",
+"max_age_hours": 24,
+"max_items": 5
+}
 
-        ]
-    }
+]
+}
 
 }
 
 # ======================================
-# CATEGORY ANCHORS
-# ======================================
-
-CATEGORY_IDS = {
-"India": "india",
-"🌆 Cities": "cities",
-"📰 Editorial": "editorial",
-"💻 Technology": "technology",
-"📈 Markets": "markets"
-}
-
-# ======================================
-# STYLE SETTINGS
+# STYLE
 # ======================================
 
 headline_colors = [
@@ -221,23 +221,13 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 <h1 style="text-align:center">📰 Divya Drishti</h1>
 <p style="text-align:center;color:gray;">{today}</p>
 
-<div style="text-align:center;margin:15px 0;font-size:14px">
-
-<a href="#india">India</a> |
-<a href="#cities">🌆 Cities</a> |
-<a href="#editorial">📰 Editorial</a> |
-<a href="#technology">💻 Technology</a> |
-<a href="#markets">📈 Markets</a>
-
-</div>
-
 <hr>
 """
 
 count = 1
 
 # ======================================
-# PROCESS CATEGORIES
+# PROCESS FEEDS
 # ======================================
 
 for category, config in CATEGORIES.items():
@@ -263,6 +253,11 @@ for category, config in CATEGORIES.items():
 
             if hasattr(entry,"published_parsed") and entry.published_parsed:
 
+                news_id = entry.link
+
+                if news_id in seen_news:
+                    continue
+
                 utc_time = datetime.fromtimestamp(time.mktime(entry.published_parsed))
 
                 age_hours = (now - utc_time).total_seconds() / 3600
@@ -271,6 +266,9 @@ for category, config in CATEGORIES.items():
                     continue
 
                 articles.append((utc_time, entry, feed_name))
+
+                seen_news.add(news_id)
+
                 items_added += 1
 
     if len(articles) == 0:
@@ -278,9 +276,7 @@ for category, config in CATEGORIES.items():
 
     articles.sort(reverse=True, key=lambda x: x[0])
 
-    category_id = CATEGORY_IDS.get(category,"section")
-
-    html += f"<h2 id='{category_id}' style='margin-top:30px'>{category}</h2>"
+    html += f"<h2 style='margin-top:30px'>{category}</h2>"
 
     for utc_time, entry, feed_name in articles:
 
@@ -326,6 +322,13 @@ for category, config in CATEGORIES.items():
         """
 
         count += 1
+
+# ======================================
+# SAVE SEEN NEWS
+# ======================================
+
+with open(SEEN_FILE,"w") as f:
+    json.dump(list(seen_news),f)
 
 # ======================================
 # EMAIL FOOTER
