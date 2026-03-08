@@ -20,7 +20,7 @@ CATEGORIES = {
                 "name": "National-TheHindu",
                 "url": "https://www.thehindu.com/news/national/feeder/default.rss",
                 "max_age_hours": 24,
-                "max_items": 1
+                "max_items": 4
             },
 
             {
@@ -57,7 +57,7 @@ CATEGORIES = {
             "name": "Asansol-Google",
             "url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 5
+            "max_items": 4
         }
     ]
 },
@@ -92,7 +92,7 @@ CATEGORIES = {
                 "name": "Opinion-TheHindu",
                 "url": "https://www.thehindu.com/opinion/editorial/feeder/default.rss",
                 "max_age_hours": 24,
-                "max_items": 1
+                "max_items": 4
             },
 
             {
@@ -112,7 +112,7 @@ CATEGORIES = {
                 "name": "Tech-TimesofIndia",
                 "url": "https://timesofindia.indiatimes.com/technology/tech-news/rssfeeds/66949542.cms",
                 "max_age_hours": 24,
-                "max_items": 5
+                "max_items": 4
             },
 
             {
@@ -126,7 +126,7 @@ CATEGORIES = {
                 "name": "Tech-BBC",
                 "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
                 "max_age_hours": 24,
-                "max_items": 5
+                "max_items": 3
             }
 
         ]
@@ -139,7 +139,7 @@ CATEGORIES = {
                 "name": "Business-TimesofIndia",
                 "url": "https://timesofindia.indiatimes.com/rssfeeds/1898055.cms",
                 "max_age_hours": 24,
-                "max_items": 5
+                "max_items": 4
             }
 
         ]
