@@ -15,9 +15,9 @@ jobs:
     steps:
 
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
-          persist-credentials: true
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -42,6 +42,10 @@ jobs:
 
       - name: Commit seen_news.json
         run: |
-          git add seen_news.json
-          git commit -m "Update seen news cache" || echo "No changes to commit"
-          git push
+          if [ -f seen_news.json ]; then
+            git add seen_news.json
+            git diff --cached --quiet || git commit -m "Update seen news cache"
+            git push
+          else
+            echo "seen_news.json not present, skipping commit"
+          fi
