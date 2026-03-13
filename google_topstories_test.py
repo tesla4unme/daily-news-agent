@@ -12,7 +12,32 @@ import random
 # ======================================
 
 CATEGORIES = {
+    "Toronto": {
+        "feeds": [
 
+            {
+                "name": "National-TheHindu",
+                "url": "https://www.thehindu.com/news/national/feeder/default.rss",
+                "max_age_hours": 24,
+                "max_items": 4
+            },
+
+            {
+                "name": "Toronto-nowtoronto",
+                "url": "https://nowtoronto.com/feed/",
+                "max_age_hours": 24,
+                "max_items": 5
+            },
+
+            {
+                "name": "Toronto-Google.com",
+                "url": "https://news.google.com/rss/search?q=Toronto&hl=en-CA&gl=CA&ceid=CA:en",
+                "max_age_hours": 24,
+                "max_items": 5
+            }
+
+        ]
+    },
     "India": {
         "feeds": [
 
