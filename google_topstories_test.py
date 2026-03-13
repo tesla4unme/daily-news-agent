@@ -14,138 +14,167 @@ import random
 CATEGORIES = {
     "Toronto": {
         "feeds": [
+
             {
                 "name": "Toronto-nowtoronto",
                 "url": "https://nowtoronto.com/feed/",
                 "max_age_hours": 24,
                 "max_items": 5
             },
+
             {
                 "name": "Toronto-Google.com",
                 "url": "https://news.google.com/rss/search?q=Toronto&hl=en-CA&gl=CA&ceid=CA:en",
                 "max_age_hours": 24,
                 "max_items": 5
             }
+
         ]
     },
-
     "India": {
         "feeds": [
+
             {
                 "name": "National-TheHindu",
                 "url": "https://www.thehindu.com/news/national/feeder/default.rss",
                 "max_age_hours": 24,
                 "max_items": 4
             },
+
             {
                 "name": "National-TimesofIndia",
                 "url": "http://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms",
                 "max_age_hours": 24,
                 "max_items": 5
             },
+
             {
                 "name": "National-Google.com",
                 "url": "https://news.google.com/rss/search?q=India&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 7
             }
+
         ]
     },
 
     "🌆 Bengaluru": {
-        "feeds": [
-            {
-                "name": "Bengaluru-Google",
-                "url": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
-                "max_age_hours": 24,
-                "max_items": 7
-            }
-        ]
-    },
+    "feeds": [
+        {
+            "name": "Bengaluru-Google",
+            "url": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
+            "max_age_hours": 24,
+            "max_items": 7
+        }
+    ]
+},
 
-    "🌆 Asansol": {
-        "feeds": [
-            {
-                "name": "Asansol-Google",
-                "url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
-                "max_age_hours": 24,
-                "max_items": 4
-            }
-        ]
-    },
+"🌆 Asansol": {
+    "feeds": [
+        {
+            "name": "Asansol-Google",
+            "url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
+            "max_age_hours": 24,
+            "max_items": 4
+        }
+    ]
+},
 
-    "🌆 Kolkata": {
-        "feeds": [
-            {
-                "name": "Kolkata-Google",
-                "url": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
-                "max_age_hours": 24,
-                "max_items": 3
-            }
-        ]
-    },
+"🌆 Kolkata": {
+    "feeds": [
+        {
+            "name": "Kolkata-Google",
+            "url": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
+            "max_age_hours": 24,
+            "max_items": 3
+        }
+    ]
+},
 
-    "🌆 Ranchi": {
-        "feeds": [
-            {
-                "name": "Ranchi-Google",
-                "url": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en",
-                "max_age_hours": 24,
-                "max_items": 2
-            }
-        ]
-    },
+"🌆 Ranchi": {
+    "feeds": [
+        {
+            "name": "Ranchi-Google",
+            "url": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en",
+            "max_age_hours": 24,
+            "max_items": 2
+        }
+    ]
+},
+       
 
     "📰 Editorial": {
         "feeds": [
+
             {
                 "name": "Opinion-TheHindu",
                 "url": "https://www.thehindu.com/opinion/editorial/feeder/default.rss",
                 "max_age_hours": 24,
                 "max_items": 4
             },
+
             {
                 "name": "Blog-TimesofIndia",
                 "url": "http://blogs.timesofindia.indiatimes.com/feed/defaultrss",
                 "max_age_hours": 24,
                 "max_items": 5
             }
+
         ]
     },
 
     "💻 Technology": {
         "feeds": [
+
             {
                 "name": "Tech-TimesofIndia",
                 "url": "https://timesofindia.indiatimes.com/technology/tech-news/rssfeeds/66949542.cms",
                 "max_age_hours": 24,
                 "max_items": 4
             },
+
             {
                 "name": "AI-Google",
                 "url": "https://news.google.com/rss/search?q=artificial+intelligence&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
                 "max_items": 5
             },
+
             {
                 "name": "Tech-BBC",
                 "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
                 "max_age_hours": 24,
                 "max_items": 3
             }
+
         ]
     },
 
     "📈 Markets": {
         "feeds": [
+
             {
                 "name": "Business-TimesofIndia",
                 "url": "https://timesofindia.indiatimes.com/rssfeeds/1898055.cms",
                 "max_age_hours": 24,
                 "max_items": 4
             }
+
         ]
     }
+
+}
+
+# ======================================
+# CATEGORY ANCHORS
+# ======================================
+
+CATEGORY_IDS = {
+"India": "india",
+"🌆 Cities": "cities",
+"📰 Editorial": "editorial",
+"💻 Technology": "technology",
+"📈 Markets": "markets"
 }
 
 # ======================================
@@ -210,6 +239,16 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 <h1 style="text-align:center">📰 Divya Drishti</h1>
 <p style="text-align:center;color:gray;">{today}</p>
 
+<div style="text-align:center;margin:15px 0;font-size:14px">
+
+<a href="#india">India</a> |
+<a href="#cities">🌆 Cities</a> |
+<a href="#editorial">📰 Editorial</a> |
+<a href="#technology">💻 Technology</a> |
+<a href="#markets">📈 Markets</a>
+
+</div>
+
 <hr>
 """
 
@@ -257,12 +296,9 @@ for category, config in CATEGORIES.items():
 
     articles.sort(reverse=True, key=lambda x: x[0])
 
-    html += f"""
-<details open style="margin-top:20px;">
-<summary style="font-size:20px;font-weight:bold;cursor:pointer;">
-{category}
-</summary>
-"""
+    category_id = CATEGORY_IDS.get(category,"section")
+
+    html += f"<h2 id='{category_id}' style='margin-top:30px'>{category}</h2>"
 
     for utc_time, entry, feed_name in articles:
 
@@ -274,42 +310,40 @@ for category, config in CATEGORIES.items():
         headline_color = random.choice(headline_colors)
 
         html += f"""
-<div style="
-background:{card_color};
-padding:15px;
-margin-bottom:12px;
-border-radius:8px;
-border:1px solid #e6e6e6;
-border-left:4px solid #1a73e8;
-">
+        <div style="
+        background:{card_color};
+        padding:15px;
+        margin-bottom:12px;
+        border-radius:8px;
+        border:1px solid #e6e6e6;
+        border-left:4px solid #1a73e8;
+        ">
 
-<b>{count}. <a href="{entry.link}" style="
-text-decoration:none;
-color:{headline_color};
-font-size:17px;
-">
-{entry.title}
-</a></b>
+        <b>{count}. <a href="{entry.link}" style="
+        text-decoration:none;
+        color:{headline_color};
+        font-size:17px;
+        ">
+        {entry.title}
+        </a></b>
 
-<br><br>
+        <br><br>
 
-<span style="
-font-size:12px;
-color:#666;
-background:#eef2f7;
-padding:3px 7px;
-border-radius:4px;
-">
-{publisher} • {formatted_time} • {age} • 
-<span style="color:#ef6c00">{feed_name}</span>
-</span>
+        <span style="
+        font-size:12px;
+        color:#666;
+        background:#eef2f7;
+        padding:3px 7px;
+        border-radius:4px;
+        ">
+        {publisher} • {formatted_time} • {age} • 
+        <span style="color:#ef6c00">{feed_name}</span>
+        </span>
 
-</div>
-"""
+        </div>
+        """
 
         count += 1
-
-    html += "</details>"
 
 # ======================================
 # EMAIL FOOTER
