@@ -16,13 +16,6 @@ CATEGORIES = {
         "feeds": [
 
             {
-                "name": "National-TheHindu",
-                "url": "https://www.thehindu.com/news/national/feeder/default.rss",
-                "max_age_hours": 24,
-                "max_items": 4
-            },
-
-            {
                 "name": "Toronto-nowtoronto",
                 "url": "https://nowtoronto.com/feed/",
                 "max_age_hours": 24,
