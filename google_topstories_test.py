@@ -26,7 +26,7 @@ CATEGORIES = {
                 "name": "Toronto-Google.com",
                 "url": "https://news.google.com/rss/search?q=Toronto&hl=en-CA&gl=CA&ceid=CA:en",
                 "max_age_hours": 24,
-                "max_items": 5
+                "max_items": 2
             }
 
         ]
@@ -52,7 +52,7 @@ CATEGORIES = {
                 "name": "National-Google.com",
                 "url": "https://news.google.com/rss/search?q=India&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
-                "max_items": 7
+                "max_items": 5
             }
 
         ]
@@ -64,7 +64,7 @@ CATEGORIES = {
             "name": "Bengaluru-Google",
             "url": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 7
+            "max_items": 5
         }
     ]
 },
@@ -75,7 +75,7 @@ CATEGORIES = {
             "name": "Asansol-Google",
             "url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 4
+            "max_items": 2
         }
     ]
 },
@@ -86,7 +86,7 @@ CATEGORIES = {
             "name": "Kolkata-Google",
             "url": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 3
+            "max_items": 2
         }
     ]
 },
@@ -110,14 +110,14 @@ CATEGORIES = {
                 "name": "Opinion-TheHindu",
                 "url": "https://www.thehindu.com/opinion/editorial/feeder/default.rss",
                 "max_age_hours": 24,
-                "max_items": 4
+                "max_items": 3
             },
 
             {
                 "name": "Blog-TimesofIndia",
                 "url": "http://blogs.timesofindia.indiatimes.com/feed/defaultrss",
                 "max_age_hours": 24,
-                "max_items": 5
+                "max_items": 4
             }
 
         ]
@@ -137,7 +137,7 @@ CATEGORIES = {
                 "name": "AI-Google",
                 "url": "https://news.google.com/rss/search?q=artificial+intelligence&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
-                "max_items": 5
+                "max_items": 3
             },
 
             {
