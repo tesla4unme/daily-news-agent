@@ -6,13 +6,25 @@ from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
 import time
 import random
+
 def titles_are_similar(t1, t2):
-    # Split both titles into sets of words
-    words1 = set(t1.lower().split())
-    words2 = set(t2.lower().split())
-    # Count how many words they have in common
-    common = words1.intersection(words2)
+    # 1. Define common words to ignore (lowercase)
+    stop_words = {'a', 'an', 'the', 'in', 'on', 'at', 'to', 'for', 'of', 'and', 'is', 'with', 'from'}
+
+    # 2. Clean and split into sets
+    # We remove punctuation so "Toronto:" becomes "toronto"
+    words1 = set(t1.lower().replace(':', '').replace('-', '').split())
+    words2 = set(t2.lower().split()) # Basic split for the second one
+
+    # 3. Remove the stop words from both sets
+    important_words1 = words1 - stop_words
+    important_words2 = words2 - stop_words
+
+    # 4. Compare only the "important" words
+    common = important_words1.intersection(important_words2)
+    
     return len(common) >= 3
+    
 # ======================================
 # CONFIGURATION
 # ======================================
