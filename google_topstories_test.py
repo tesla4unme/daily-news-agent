@@ -6,7 +6,13 @@ from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
 import time
 import random
-
+def titles_are_similar(t1, t2):
+    # Split both titles into sets of words
+    words1 = set(t1.lower().split())
+    words2 = set(t2.lower().split())
+    # Count how many words they have in common
+    common = words1.intersection(words2)
+    return len(common) >= 3
 # ======================================
 # CONFIGURATION
 # ======================================
@@ -301,8 +307,12 @@ for category, config in CATEGORIES.items():
     category_id = CATEGORY_IDS.get(category,"section")
 
     html += f"<h2 id='{category_id}' style='margin-top:30px'>{category}</h2>"
-
+    title_store = ""
     for utc_time, entry, feed_name in articles:
+        if titles_are_similar(entry.title, title_store):
+            continue  # Skip if 3 words match the previous title
+            
+        title_store = entry.title
 
         formatted_time, age = format_age(utc_time)
 
