@@ -30,24 +30,38 @@ def titles_are_similar(t1, t2):
 # GITA LINK PICKER FUNCTION (NEW)
 # ======================================
 def get_gita_link(file_path):
-    # You can change this number (3, 4, 5, etc.) to decide rotation days
-    DAYS_TO_WAIT = 3 
-    
     try:
-        # Read the CSV
+        # 1. Load the CSV
         df = pd.read_csv(file_path, header=None)
-        # Filter for rows that have a youtube link in the second column
-        valid_links = df[df[1].str.contains('youtube', na=False)].reset_index(drop=True)
         
-        # Reference date to calculate rotation
-        start_date = datetime(2024, 1, 1) 
-        days_since_start = (datetime.now() - start_date).days
-        index = (days_since_start // DAYS_TO_WAIT) % len(valid_links)
+        # 2. Get today's date in the exact format used in your CSV (e.g., 30-Mar-2026)
+        # Note: I'm using Mar 30 here as a test since your file starts then.
+        # For real time, use: datetime.now().strftime("%d-%b-%Y")
+        today_str = datetime.now().strftime("%d-%b-%Y")
         
-        title = valid_links.iloc[index][2]
-        url = valid_links.iloc[index][1]
-        return title, url
-    except:
+        print(f"Checking CSV for date: {today_str}")
+
+        # 3. Find rows where the first column matches today
+        # We strip whitespace just in case
+        match = df[df[0].str.strip() == today_str]
+
+        if not match.empty:
+            # If there are multiple links for one day, pick one randomly or the first one
+            row = match.iloc[0] 
+            title = row[2]
+            url = row[1]
+            print(f"Found Gita Link: {title}")
+            return title, url
+        else:
+            # FALLBACK: If today's date isn't found, just pick a random one 
+            # so the section isn't empty!
+            print("Date not found in CSV, picking a random link as fallback.")
+            valid_rows = df[df[1].str.contains('youtube', na=False)]
+            random_row = valid_rows.sample(1).iloc[0]
+            return random_row[2], random_row[1]
+
+    except Exception as e:
+        print(f"Error reading Gita CSV: {e}")
         return None, None
     
 # ======================================
