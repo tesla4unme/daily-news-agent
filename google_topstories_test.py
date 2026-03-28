@@ -29,7 +29,7 @@ def titles_are_similar(t1, t2):
 # ======================================
 # GITA LINK PICKER (TEXT FILE VERSION)
 # ======================================
-def get_gita_link(file_path, repeat_days=3, offset=-15):
+def get_gita_link(file_path, repeat_days=3, offset=-20):
     try:
         with open(file_path, 'r') as f:
             links = [line.strip() for line in f if line.strip()]
@@ -305,7 +305,7 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 # ======================================
 # ADD GITA SECTION (NEW)
 # ======================================
-gita_title, gita_url = get_gita_link('gitaslokas.txt', repeat_days=3, offset=-15)
+gita_title, gita_url = get_gita_link('gitaslokas.txt', repeat_days=3, offset=-20)
 
 if gita_title:
     html += f"""
