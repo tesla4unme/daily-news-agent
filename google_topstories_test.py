@@ -27,43 +27,33 @@ def titles_are_similar(t1, t2):
     return len(common) >= 3
 
 # ======================================
-# GITA LINK PICKER FUNCTION (NEW)
+# GITA LINK PICKER (TEXT FILE VERSION)
 # ======================================
-def get_gita_link(file_path):
+def get_gita_link(file_path, repeat_days=3):
     try:
-        # 1. Load the CSV
-        df = pd.read_csv(file_path, header=None)
-        
-        # 2. Get today's date in the exact format used in your CSV (e.g., 30-Mar-2026)
-        # Note: I'm using Mar 30 here as a test since your file starts then.
-        # For real time, use: datetime.now().strftime("%d-%b-%Y")
-        today_str = datetime.now().strftime("%d-%b-%Y")
-        
-        print(f"Checking CSV for date: {today_str}")
+        with open(file_path, 'r') as f:
+            links = [line.strip() for line in f if line.strip()]
 
-        # 3. Find rows where the first column matches today
-        # We strip whitespace just in case
-        match = df[df[0].str.strip() == today_str]
+        if not links:
+            print("Gita file is empty")
+            return None, None
 
-        if not match.empty:
-            # If there are multiple links for one day, pick one randomly or the first one
-            row = match.iloc[0] 
-            title = row[2]
-            url = row[1]
-            print(f"Found Gita Link: {title}")
-            return title, url
-        else:
-            # FALLBACK: If today's date isn't found, just pick a random one 
-            # so the section isn't empty!
-            print("Date not found in CSV, picking a random link as fallback.")
-            valid_rows = df[df[1].str.contains('youtube', na=False)]
-            random_row = valid_rows.sample(1).iloc[0]
-            return random_row[2], random_row[1]
+        # Get day of year (1–365)
+        day_number = datetime.now().timetuple().tm_yday
+
+        # Repeat logic (same link for N days)
+        index = (day_number // repeat_days) % len(links)
+
+        url = links[index]
+        title = "🕉 Bhagavad Gita – Daily Wisdom"
+
+        print(f"Gita index: {index}, URL: {url}")
+
+        return title, url
 
     except Exception as e:
-        print(f"Error reading Gita CSV: {e}")
+        print(f"Gita file error: {e}")
         return None, None
-    
 # ======================================
 # CONFIGURATION
 # ======================================
@@ -315,7 +305,7 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 # ======================================
 # ADD GITA SECTION (NEW)
 # ======================================
-gita_title, gita_url = get_gita_link('Gita youtube links by date.csv')
+gita_title, gita_url = get_gita_link('gitaslokas.txt', repeat_days=3)
 
 if gita_title:
     html += f"""
