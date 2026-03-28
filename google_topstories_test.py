@@ -44,7 +44,7 @@ CATEGORIES = {
                 "name": "Toronto-Google.com",
                 "url": "https://news.google.com/rss/search?q=Toronto&hl=en-CA&gl=CA&ceid=CA:en",
                 "max_age_hours": 24,
-                "max_items": 2
+                "max_items": 0
             }
 
         ]
@@ -93,7 +93,7 @@ CATEGORIES = {
             "name": "Asansol-Google",
             "url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 2
+            "max_items": 0
         }
     ]
 },
@@ -104,7 +104,7 @@ CATEGORIES = {
             "name": "Kolkata-Google",
             "url": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 2
+            "max_items": 0
         }
     ]
 },
@@ -115,7 +115,7 @@ CATEGORIES = {
             "name": "Ranchi-Google",
             "url": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 2
+            "max_items": 0
         }
     ]
 },
@@ -155,14 +155,14 @@ CATEGORIES = {
                 "name": "AI-Google",
                 "url": "https://news.google.com/rss/search?q=artificial+intelligence&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
-                "max_items": 3
+                "max_items": 0
             },
 
             {
                 "name": "Tech-BBC",
                 "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
                 "max_age_hours": 24,
-                "max_items": 3
+                "max_items": 0
             }
 
         ]
@@ -175,7 +175,7 @@ CATEGORIES = {
                 "name": "Business-TimesofIndia",
                 "url": "https://timesofindia.indiatimes.com/rssfeeds/1898055.cms",
                 "max_age_hours": 24,
-                "max_items": 4
+                "max_items": 0
             }
 
         ]
