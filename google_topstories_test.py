@@ -1,6 +1,7 @@
 import feedparser
 import smtplib
 import os
+import pandas as pd  # Added for CSV handling
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
@@ -24,6 +25,30 @@ def titles_are_similar(t1, t2):
     common = important_words1.intersection(important_words2)
     
     return len(common) >= 3
+
+# ======================================
+# GITA LINK PICKER FUNCTION (NEW)
+# ======================================
+def get_gita_link(file_path):
+    # You can change this number (3, 4, 5, etc.) to decide rotation days
+    DAYS_TO_WAIT = 3 
+    
+    try:
+        # Read the CSV
+        df = pd.read_csv(file_path, header=None)
+        # Filter for rows that have a youtube link in the second column
+        valid_links = df[df[1].str.contains('youtube', na=False)].reset_index(drop=True)
+        
+        # Reference date to calculate rotation
+        start_date = datetime(2024, 1, 1) 
+        days_since_start = (datetime.now() - start_date).days
+        index = (days_since_start // DAYS_TO_WAIT) % len(valid_links)
+        
+        title = valid_links.iloc[index][2]
+        url = valid_links.iloc[index][1]
+        return title, url
+    except:
+        return None, None
     
 # ======================================
 # CONFIGURATION
@@ -119,7 +144,7 @@ CATEGORIES = {
         }
     ]
 },
-       
+        
 
     "📰 Editorial": {
         "feeds": [
@@ -260,7 +285,8 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 
 <div style="text-align:center;margin:15px 0;font-size:14px">
 
-<a href="#india">🍁 Toronto</a> |
+<a href="#gita">🕉 Gita</a> |
+<a href="#toronto">🍁 Toronto</a> |
 <a href="#india">🛕 India</a> |
 <a href="#cities">🌆 Cities</a> |
 <a href="#editorial">📰 Editorial</a> |
@@ -271,6 +297,32 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 
 <hr>
 """
+
+# ======================================
+# ADD GITA SECTION (NEW)
+# ======================================
+gita_title, gita_url = get_gita_link('Gita youtube links by date.csv')
+
+if gita_title:
+    html += f"""
+    <h2 id="gita" style="margin-top:30px; color:#ef6c00">🕉 Bhagavad Gita</h2>
+    <div style="
+        background:#fffbea;
+        padding:15px;
+        margin-bottom:12px;
+        border-radius:8px;
+        border:1px solid #ffe082;
+        border-left:4px solid #ef6c00;
+    ">
+        <b><a href="{gita_url}" style="text-decoration:none; color:#1a73e8; font-size:18px;">
+            {gita_title}
+        </a></b>
+        <p style="margin:10px 0 0 0; font-size:12px; color:#666;">
+            Refreshing every few days based on your schedule.
+        </p>
+    </div>
+    <hr>
+    """
 
 count = 1
 
