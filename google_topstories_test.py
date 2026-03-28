@@ -29,7 +29,7 @@ def titles_are_similar(t1, t2):
 # ======================================
 # GITA LINK PICKER (TEXT FILE VERSION)
 # ======================================
-def get_gita_link(file_path, repeat_days=3):
+def get_gita_link(file_path, repeat_days=3, offset=-10):
     try:
         with open(file_path, 'r') as f:
             links = [line.strip() for line in f if line.strip()]
@@ -41,13 +41,13 @@ def get_gita_link(file_path, repeat_days=3):
         # Get day of year (1–365)
         day_number = datetime.now().timetuple().tm_yday
 
-        # Repeat logic (same link for N days)
-        index = (day_number // repeat_days) % len(links)
+        # 🔥 Updated logic with offset control
+        index = ((day_number // repeat_days) + offset) % len(links)
 
         url = links[index]
         title = "🕉 Bhagavad Gita – Daily Wisdom"
 
-        print(f"Gita index: {index}, URL: {url}")
+        print(f"Gita index: {index}, Offset: {offset}, URL: {url}")
 
         return title, url
 
@@ -305,7 +305,7 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 # ======================================
 # ADD GITA SECTION (NEW)
 # ======================================
-gita_title, gita_url = get_gita_link('gitaslokas.txt', repeat_days=3)
+gita_title, gita_url = get_gita_link('gitaslokas.txt', repeat_days=3, offset=-10)
 
 if gita_title:
     html += f"""
