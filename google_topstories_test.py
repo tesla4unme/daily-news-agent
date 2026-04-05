@@ -172,7 +172,23 @@ CATEGORIES = {
                 "url": "http://blogs.timesofindia.indiatimes.com/feed/defaultrss",
                 "max_age_hours": 24,
                 "max_items": 4
+            },
+            
+            {
+                "name": "Opinion-TheStatesman",
+                "url": "https://www.thestatesman.com/rss/opinion",
+                "max_age_hours": 24,
+                "max_items": 2
+            },
+            
+            
+            {
+                "name": "Opinion-Indianexpress",
+                "url": "	https://indianexpress.com/section/opinion/feed/",
+                "max_age_hours": 24,
+                "max_items": 2
             }
+
 
         ]
     },
@@ -199,6 +215,12 @@ CATEGORIES = {
                 "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
                 "max_age_hours": 24,
                 "max_items": 0
+            },
+            {
+                "name": "AI-Indianexpress",
+                "url": "https://indianexpress.com/section/technology/artificial-intelligence/feed/",
+                "max_age_hours": 24,
+                "max_items": 4
             }
 
         ]
