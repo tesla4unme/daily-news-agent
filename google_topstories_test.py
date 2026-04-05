@@ -44,16 +44,20 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
         # 🔥 Updated logic with offset control
         index = ((day_number // repeat_days) + offset) % len(links)
 
-        url = links[index]
+        # url = links[index]
         # Fetch automatically from YouTube oEmbed
+        url = line_parts[1].strip() if len(line_parts) > 1 else links[index].strip()
+
+        # 2. Correct Indentation (4 spaces)
         try:
-                response = requests.get(f"https://www.youtube.com/oembed?url={url}&format=json", timeout=10)
-                if response.status_code == 200:
-                    title = "🕉 " + response.json().get('title', 'Gita Wisdom')
-                else:
-                    title = "🕉 Bhagavad Gita – Daily Wisdom"
-        except:
+            response = requests.get(f"https://www.youtube.com/oembed?url={url}&format=json", timeout=10)
+            if response.status_code == 200:
+                title = "🕉 " + response.json().get('title', 'Gita Wisdom')
+            else:
                 title = "🕉 Bhagavad Gita – Daily Wisdom"
+        except:
+            title = "🕉 Bhagavad Gita – Daily Wisdom"
+    
         # title = "🕉 Bhagavad Gita – Daily Wisdom"
 
                 print(f"Gita index: {index}, Offset: {offset}, URL: {url}")
