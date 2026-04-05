@@ -45,7 +45,7 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
         index = ((day_number // repeat_days) + offset) % len(links)
 
         url = links[index]
-        title = "🕉 Bhagavad Gita – Daily Wisdom" ||url
+        title = "🕉 Bhagavad Gita – Daily Wisdom" + url
 
         print(f"Gita index: {index}, Offset: {offset}, URL: {url}")
 
