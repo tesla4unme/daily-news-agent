@@ -46,14 +46,8 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
 
         url = links[index]
         space_index = url.find(" ")
-        if space_index != -1:
-        # Slice from the character after the space to the end
-            title = line[space_index + 1:].strip()            
-        else:
-            title = "Bhagavad Gita – Daily Wisdom"
-        
-    
-        title = "🕉 Bhagavad Gita – Daily Wisdom" + title
+        title = url_line[space_index + 1:].strip()
+        #title = "🕉 Bhagavad Gita – Daily Wisdom" 
 
         print(f"Gita index: {index}, Offset: {offset}, URL: {url}")
 
