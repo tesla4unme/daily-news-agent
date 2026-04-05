@@ -50,7 +50,7 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
         # Slice from the character after the space to the end
             title = line[space_index + 1:].strip()            
         else:
-        title = "Bhagavad Gita – Daily Wisdom"
+            title = "Bhagavad Gita – Daily Wisdom"
         
     
         title = "🕉 Bhagavad Gita – Daily Wisdom" + title
