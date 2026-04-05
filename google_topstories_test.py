@@ -45,7 +45,16 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
         index = ((day_number // repeat_days) + offset) % len(links)
 
         url = links[index]
-        title = "🕉 Bhagavad Gita – Daily Wisdom"
+        # Fetch automatically from YouTube oEmbed
+            try:
+                response = requests.get(f"https://www.youtube.com/oembed?url={url}&format=json", timeout=5)
+                if response.status_code == 200:
+                    title = "🕉 " + response.json().get('title', 'Gita Wisdom')
+                else:
+                    title = "🕉 Bhagavad Gita – Daily Wisdom"
+            except:
+                title = "🕉 Bhagavad Gita – Daily Wisdom"
+        # title = "🕉 Bhagavad Gita – Daily Wisdom"
 
         print(f"Gita index: {index}, Offset: {offset}, URL: {url}")
 
