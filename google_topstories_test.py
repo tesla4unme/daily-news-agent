@@ -47,6 +47,7 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
         # url = links[index]
         line = links[index]
         url, title = line.split(" ", 1)
+        title = title + /n + "🕉 Bhagavad Gita – Daily Wisdom"
 
         
         # title = "🕉 Bhagavad Gita – Daily Wisdom"
