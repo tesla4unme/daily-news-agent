@@ -44,21 +44,8 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
         # 🔥 Updated logic with offset control
         index = ((day_number // repeat_days) + offset) % len(links)
 
-        # url = links[index]
-        # Fetch automatically from YouTube oEmbed
-        url = line_parts[1].strip() if len(line_parts) > 1 else links[index].strip()
-
-        # 2. Correct Indentation (4 spaces)
-        try:
-            response = requests.get(f"https://www.youtube.com/oembed?url={url}&format=json", timeout=10)
-            if response.status_code == 200:
-                title = "🕉 " + response.json().get('title', 'Gita Wisdom')
-            else:
-                title = "🕉 Bhagavad Gita – Daily Wisdom"
-        except:
-            title = "🕉 Bhagavad Gita – Daily Wisdom"
-    
-        # title = "🕉 Bhagavad Gita – Daily Wisdom"
+        url = links[index]
+        title = "🕉 Bhagavad Gita – Daily Wisdom"
 
         print(f"Gita index: {index}, Offset: {offset}, URL: {url}")
 
@@ -170,18 +157,12 @@ CATEGORIES = {
                 "name": "Opinion-TheHindu",
                 "url": "https://www.thehindu.com/opinion/editorial/feeder/default.rss",
                 "max_age_hours": 24,
-                "max_items": 2
+                "max_items": 3
             },
 
             {
                 "name": "Blog-TimesofIndia",
                 "url": "http://blogs.timesofindia.indiatimes.com/feed/defaultrss",
-                "max_age_hours": 24,
-                "max_items": 4
-            },
-            {
-                "name": "Opinion-Thestatesman",
-                "url": "https://www.thestatesman.com/rss/opinion",
                 "max_age_hours": 24,
                 "max_items": 4
             }
