@@ -64,7 +64,44 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
 # ======================================
 # CONFIGURATION
 # ======================================
+# ======================================
+# HCM LINK PICKER (TEXT FILE VERSION)
+# ======================================
+def get_HCM_link(file_path, repeat_days=3, offset=-30):
+    try:
+        with open(file_path, 'r') as f:
+            links = [line.strip() for line in f if line.strip()]
 
+        if not links:
+            print("HCM file is empty")
+            return None, None
+
+        # Get day of year (1–365)
+        day_number = datetime.now().timetuple().tm_yday
+
+        # 🔥 Updated logic with offset control
+        index = ((day_number // repeat_days) + offset) % len(links)
+
+        # url = links[index]
+        line = links[index]
+        url, title = line.split(" ", 1)
+        
+        
+        title = title + "<br>" + "🕉 HCM – Daily Learn"
+
+        
+        # title = "🕉 Bhagavad Gita – Daily Wisdom"
+
+        print(f"HCM index: {index}, Offset: {offset}, URL: {url}")
+
+        return title.strip(), url.strip()
+
+    except Exception as e:
+        print(f"HCM file error: {e}")
+        return None, None
+# ======================================
+# CONFIGURATION
+# ======================================
 CATEGORIES = {
     "🍁 Toronto": {
         "feeds": [
@@ -319,6 +356,7 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 <div style="text-align:center;margin:15px 0;font-size:14px">
 
 <a href="#gita">🕉 Gita</a> |
+<a href="#HCM">🕉 HCM</a> |
 <a href="#toronto">🍁 Toronto</a> |
 <a href="#india">🛕 India</a> |
 <a href="#cities">🌆 Cities</a> |
@@ -349,6 +387,33 @@ if gita_title:
     ">
         <b><a href="{gita_url}" style="text-decoration:none; color:#1a73e8; font-size:18px;">
             {gita_title}
+        </a></b>
+        <p style="margin:10px 0 0 0; font-size:12px; color:#666;">
+            Refreshing every few days based on your schedule.
+        </p>
+    </div>
+    <hr>
+    """
+
+count = 1
+# ======================================
+# ADD HCM SECTION (NEW)
+# ======================================
+HCM_title, HCM_url = get_HCM_link('HCM.txt', repeat_days=3, offset=-30)
+
+if HCM_title:
+    html += f"""
+    <h2 id="HCM" style="margin-top:30px; color:#ef6c00">🕉 HCM</h2>
+    <div style="
+        background:#fffbea;
+        padding:15px;
+        margin-bottom:12px;
+        border-radius:8px;
+        border:1px solid #ffe082;
+        border-left:4px solid #ef6c00;
+    ">
+        <b><a href="{HCM_url}" style="text-decoration:none; color:#1a73e8; font-size:18px;">
+            {HCM_title}
         </a></b>
         <p style="margin:10px 0 0 0; font-size:12px; color:#666;">
             Refreshing every few days based on your schedule.
