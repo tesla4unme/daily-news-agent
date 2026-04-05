@@ -47,7 +47,7 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
         url = links[index]
         # Fetch automatically from YouTube oEmbed
         try:
-                response = requests.get(f"https://www.youtube.com/oembed?url={url}&format=json", timeout=5)
+                response = requests.get(f"https://www.youtube.com/oembed?url={url}&format=json", timeout=10)
                 if response.status_code == 200:
                     title = "🕉 " + response.json().get('title', 'Gita Wisdom')
                 else:
