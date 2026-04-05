@@ -157,12 +157,18 @@ CATEGORIES = {
                 "name": "Opinion-TheHindu",
                 "url": "https://www.thehindu.com/opinion/editorial/feeder/default.rss",
                 "max_age_hours": 24,
-                "max_items": 3
+                "max_items": 2
             },
 
             {
                 "name": "Blog-TimesofIndia",
                 "url": "http://blogs.timesofindia.indiatimes.com/feed/defaultrss",
+                "max_age_hours": 24,
+                "max_items": 4
+            },
+            {
+                "name": "Opinion-Thestatesman",
+                "url": "https://www.thestatesman.com/rss/opinion",
                 "max_age_hours": 24,
                 "max_items": 4
             }
