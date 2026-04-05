@@ -60,7 +60,7 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
     
         # title = "🕉 Bhagavad Gita – Daily Wisdom"
 
-                print(f"Gita index: {index}, Offset: {offset}, URL: {url}")
+        print(f"Gita index: {index}, Offset: {offset}, URL: {url}")
 
         return title, url
 
