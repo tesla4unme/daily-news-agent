@@ -129,7 +129,7 @@ CATEGORIES = {
             "name": "Asansol-Google",
             "url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 0
+            "max_items": 1
         }
     ]
 },
@@ -140,7 +140,7 @@ CATEGORIES = {
             "name": "Kolkata-Google",
             "url": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 0
+            "max_items": 1
         }
     ]
 },
@@ -151,7 +151,7 @@ CATEGORIES = {
             "name": "Ranchi-Google",
             "url": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 0
+            "max_items": 1
         }
     ]
 },
