@@ -44,12 +44,16 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
         # 🔥 Updated logic with offset control
         index = ((day_number // repeat_days) + offset) % len(links)
 
-        url = links[index]
-        title = "🕉 Bhagavad Gita – Daily Wisdom"
+        # url = links[index]
+        line = links[index]
+        url, title = line.split(" ", 1)
+
+        
+        # title = "🕉 Bhagavad Gita – Daily Wisdom"
 
         print(f"Gita index: {index}, Offset: {offset}, URL: {url}")
 
-        return title, url
+        return title.strip(), url.strip()
 
     except Exception as e:
         print(f"Gita file error: {e}")
