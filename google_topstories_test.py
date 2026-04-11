@@ -63,9 +63,13 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
         return None, None
 # ======================================
 # --- CONFIGURATION ---
-# We wrap the Raw link in Google's viewer to prevent forced downloads
+# The Raw link to your PDF
 RAW_PDF_URL = "https://raw.githubusercontent.com/tesla4unme/daily-news-agent/main/01042026-md-red.pdf"
-MAGAZINE_URL = f"https://docs.google.com/viewer?url={RAW_PDF_URL}"
+
+# We use a browser-based viewer that handles large files better than Google
+# This uses the official PDF.js viewer hosted by jsDelivr
+MAGAZINE_URL = f"https://mozilla.github.io/pdf.js/web/viewer.html?file={RAW_PDF_URL}"
+
 MAGAZINE_TITLE = "Readers_digest"
 # ======================================
 
