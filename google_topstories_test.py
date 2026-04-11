@@ -14,7 +14,7 @@ def titles_are_similar(t1, t2):
 
     # 2. Clean and split into sets
     # We remove punctuation so "Toronto:" becomes "toronto"
-    words1 = set(t1.lower().replace(':', '').replace('-', '').split())
+    words1 = set(t1.lower().split())
     words2 = set(t2.lower().split()) # Basic split for the second one
 
     # 3. Remove the stop words from both sets
