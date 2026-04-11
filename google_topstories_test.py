@@ -61,6 +61,27 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
     except Exception as e:
         print(f"Gita file error: {e}")
         return None, None
+
+# --- CONFIGURATION ---
+# The Raw link to your magazine
+MAGAZINE_URL = "https://raw.githubusercontent.com/tesla4unme/daily-news-agent/main/01042026-md-red.pdf"
+MAGAZINE_TITLE = "Readers_digest"
+
+# --- HTML SECTION FOR EMAIL ---
+magazine_html = f"""
+<hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+<div style="background-color: #f4f7f6; padding: 20px; border-radius: 8px; border-left: 6px solid #d35400;">
+    <h3 style="margin-top: 0; color: #d35400;">📖 My Daily Reading Room</h3>
+    <p style="color: #34495e; font-size: 16px;">
+        Take a 10-minute break today to read a few pages of your magazine.
+    </p>
+    <a href="{MAGAZINE_URL}" 
+       style="background-color: #d35400; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
+        Open {MAGAZINE_TITLE}
+    </a>
+</div>
+"""
+
 # ======================================
 # CONFIGURATION
 # ======================================
