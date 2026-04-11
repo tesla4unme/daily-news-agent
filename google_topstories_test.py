@@ -117,7 +117,7 @@ CATEGORIES = {
                 "name": "Toronto-Google.com",
                 "url": "https://news.google.com/rss/search?q=Toronto&hl=en-CA&gl=CA&ceid=CA:en",
                 "max_age_hours": 24,
-                "max_items": 0
+                "max_items": 1
             }
 
         ]
