@@ -63,8 +63,9 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
         return None, None
 # ======================================
 # --- CONFIGURATION ---
-# The Raw link to your magazine
-MAGAZINE_URL = "https://raw.githubusercontent.com/tesla4unme/daily-news-agent/main/01042026-md-red.pdf"
+# We wrap the Raw link in Google's viewer to prevent forced downloads
+RAW_PDF_URL = "https://raw.githubusercontent.com/tesla4unme/daily-news-agent/main/01042026-md-red.pdf"
+MAGAZINE_URL = f"https://docs.google.com/viewer?url={RAW_PDF_URL}"
 MAGAZINE_TITLE = "Readers_digest"
 # ======================================
 
@@ -76,7 +77,7 @@ magazine_html = f"""
     <p style="color: #34495e; font-size: 16px;">
         Take a 10-minute break today to read a few pages of your magazine.
     </p>
-    <a href="{MAGAZINE_URL}" 
+    <a href="{MAGAZINE_URL}" target="_blank"
        style="background-color: #d35400; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
         Open {MAGAZINE_TITLE}
     </a>
