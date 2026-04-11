@@ -62,30 +62,44 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
         print(f"Gita file error: {e}")
         return None, None
 # ======================================
-# --- CONFIGURATION ---
+# ======================================
+# --- READING ROOM CONFIGURATION ---
+# ======================================
 # The Raw link to your PDF
 RAW_PDF_URL = "https://raw.githubusercontent.com/tesla4unme/daily-news-agent/main/01042026-md-red.pdf"
 
-# We use a browser-based viewer that handles large files better than Google
-# This uses the official PDF.js viewer hosted by jsDelivr
-MAGAZINE_URL = f"https://mozilla.github.io/pdf.js/web/viewer.html?file={RAW_PDF_URL}"
+# Option 1: Google Embedded View (Optimized for Mobile)
+MAGAZINE_URL = f"https://docs.google.com/viewer?url={RAW_PDF_URL}&embedded=true"
 
-MAGAZINE_TITLE = "Readers_digest"
-# ======================================
+MAGAZINE_TITLE = "Reader's Digest - April"
 
 # --- HTML SECTION FOR EMAIL ---
+# Designed to look like a "Library Card" on mobile devices
 magazine_html = f"""
-<hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-<div style="background-color: #f4f7f6; padding: 20px; border-radius: 8px; border-left: 6px solid #d35400;">
-    <h3 style="margin-top: 0; color: #d35400;">📖 My Daily Reading Room</h3>
-    <p style="color: #34495e; font-size: 16px;">
-        Take a 10-minute break today to read a few pages of your magazine.
-    </p>
-    <a href="{MAGAZINE_URL}" target="_blank"
-       style="background-color: #d35400; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
-        Open {MAGAZINE_TITLE}
-    </a>
+<div style="margin: 20px 0; text-align: center;">
+    <div style="
+        display: inline-block; 
+        background: linear-gradient(135deg, #d35400, #e67e22); 
+        color: white; 
+        padding: 25px; 
+        border-radius: 15px; 
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15); 
+        max-width: 90%;
+        text-align: left;
+    ">
+        <h3 style="margin-top: 0; color: #ffffff; font-size: 20px;">📖 Daily Reading Room</h3>
+        <p style="color: #ffffff; font-size: 15px; opacity: 0.9; line-height: 1.4;">
+            Your 100-page challenge is waiting. Open your copy of <b>{MAGAZINE_TITLE}</b> and read a few pages now.
+        </p>
+        <div style="text-align: center; margin-top: 15px;">
+            <a href="{MAGAZINE_URL}" target="_blank"
+               style="background-color: white; color: #d35400; padding: 12px 25px; text-decoration: none; border-radius: 25px; font-weight: bold; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                ✨ Open Magazine
+            </a>
+        </div>
+    </div>
 </div>
+<hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
 """
 # ======================================
 
