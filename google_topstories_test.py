@@ -61,11 +61,12 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
     except Exception as e:
         print(f"Gita file error: {e}")
         return None, None
-
+# ======================================
 # --- CONFIGURATION ---
 # The Raw link to your magazine
 MAGAZINE_URL = "https://raw.githubusercontent.com/tesla4unme/daily-news-agent/main/01042026-md-red.pdf"
 MAGAZINE_TITLE = "Readers_digest"
+# ======================================
 
 # --- HTML SECTION FOR EMAIL ---
 magazine_html = f"""
@@ -81,10 +82,6 @@ magazine_html = f"""
     </a>
 </div>
 """
-# ======================================
-# ADD MAGAZINE SECTION (NEW FIX HERE)
-# ======================================
-html += magazine_html  # <--- THIS LINE WAS MISSING
 # ======================================
 
 
@@ -450,6 +447,14 @@ if HCM_title:
     """
 
 count = 1
+
+
+# ======================================
+# ADD MAGAZINE SECTION (NEW FIX HERE)
+# ======================================
+html += magazine_html  # <--- THIS LINE WAS MISSING
+# ======================================
+
 
 # ======================================
 # PROCESS CATEGORIES
