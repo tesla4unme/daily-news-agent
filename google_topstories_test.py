@@ -65,36 +65,32 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
 # ======================================
 # --- READING ROOM CONFIGURATION ---
 # ======================================
-# The Raw link to your PDF
-RAW_PDF_URL = "https://raw.githubusercontent.com/tesla4unme/daily-news-agent/main/01042026-md-red.pdf"
-
-# This uses the Mozilla PDF.js viewer which does NOT have the 25MB limit.
-# It is the most reliable way for large files on mobile.
-MAGAZINE_URL = f"https://mozilla.github.io/pdf.js/web/viewer.html?file={RAW_PDF_URL}"
-
-MAGAZINE_TITLE = "Reader's Digest - April"
+# Your new interactive Flipbook link
+MAGAZINE_URL = "https://heyzine.com/flip-book/d63743a73c.html"
+MAGAZINE_TITLE = "Reader's Digest - April Edition"
 
 # --- HTML SECTION FOR EMAIL ---
+# Updated with a "Premium" look to match the flipbook experience
 magazine_html = f"""
 <div style="margin: 20px 0; text-align: center;">
     <div style="
         display: inline-block; 
-        background: linear-gradient(135deg, #2c3e50, #34495e); 
+        background: linear-gradient(135deg, #1e3c72, #2a5298); 
         color: white; 
         padding: 25px; 
         border-radius: 15px; 
-        box-shadow: 0 8px 16px rgba(0,0,0,0.15); 
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
         max-width: 90%;
         text-align: left;
     ">
-        <h3 style="margin-top: 0; color: #ffffff; font-size: 20px;">📖 Daily Reading Room</h3>
+        <h3 style="margin-top: 0; color: #ffffff; font-size: 20px;">📖 Interactive Reading Room</h3>
         <p style="color: #ffffff; font-size: 15px; opacity: 0.9; line-height: 1.4;">
-            Your 100-page challenge is waiting. This viewer is optimized for your large file.
+            Your interactive flipbook for <b>{MAGAZINE_TITLE}</b> is ready. Enjoy a seamless reading experience on your mobile.
         </p>
         <div style="text-align: center; margin-top: 15px;">
             <a href="{MAGAZINE_URL}" target="_blank"
-               style="background-color: white; color: #2c3e50; padding: 12px 25px; text-decoration: none; border-radius: 25px; font-weight: bold; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                ✨ Open Magazine
+               style="background-color: #ff9f43; color: white; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                ✨ Open Flipbook
             </a>
         </div>
     </div>
