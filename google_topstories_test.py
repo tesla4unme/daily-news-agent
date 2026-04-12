@@ -149,7 +149,7 @@ CATEGORIES = {
                 "name": "Toronto-nowtoronto",
                 "url": "https://nowtoronto.com/feed/",
                 "max_age_hours": 24,
-                "max_items": 5
+                "max_items": 2
             },
 
             {
@@ -205,7 +205,7 @@ CATEGORIES = {
             "name": "Asansol-Google",
             "url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 1
+            "max_items": 2
         }
     ]
 },
@@ -227,7 +227,7 @@ CATEGORIES = {
             "name": "Ranchi-Google",
             "url": "https://news.google.com/rss/search?q=Ranchi&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 1
+            "max_items": 2
         }
     ]
 },
@@ -240,21 +240,21 @@ CATEGORIES = {
                 "name": "Opinion-TheHindu",
                 "url": "https://www.thehindu.com/opinion/editorial/feeder/default.rss",
                 "max_age_hours": 24,
-                "max_items": 3
+                "max_items": 2
             },
 
             {
                 "name": "Blog-TimesofIndia",
                 "url": "http://blogs.timesofindia.indiatimes.com/feed/defaultrss",
                 "max_age_hours": 24,
-                "max_items": 4
+                "max_items": 7
             },
             
             {
                 "name": "Opinion-TheStatesman",
                 "url": "https://www.thestatesman.com/rss/opinion",
                 "max_age_hours": 24,
-                "max_items": 2
+                "max_items": 4
             },
             
             
@@ -262,7 +262,7 @@ CATEGORIES = {
                 "name": "Opinion-Indianexpress",
                 "url": "	https://indianexpress.com/section/opinion/feed/",
                 "max_age_hours": 24,
-                "max_items": 2
+                "max_items": 4
             }
 
 
