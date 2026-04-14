@@ -66,7 +66,8 @@ def get_gita_link(file_path, repeat_days=3, offset=-30):
 # --- READING ROOM CONFIGURATION ---
 # ======================================
 # Your new interactive Flipbook link
-MAGAZINE_URL = "https://heyzine.com/flip-book/d63743a73c.html"
+#MAGAZINE_URL = "https://heyzine.com/flip-book/d63743a73c.html"
+MAGAZINE_URL = "https://www.emagpub.com/magazines/readersdigest/2026-04-01/5/2#page/26"
 MAGAZINE_TITLE = "Reader's Digest - April Edition"
 
 # --- HTML SECTION FOR EMAIL ---
