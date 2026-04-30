@@ -412,7 +412,7 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 # ======================================
 # ADD GITA SECTION (NEW)
 # ======================================
-gita_title, gita_url = get_gita_link('gitaslokas.txt', repeat_days=3, offset=-30)
+gita_title, gita_url = get_gita_link('gitaslokas1.txt', repeat_days=3, offset=-30)
 
 if gita_title:
     html += f"""
