@@ -307,10 +307,16 @@ CATEGORIES = {
         "feeds": [
 
             {
-                "name": "Business-TimesofIndia",
-                "url": "https://timesofindia.indiatimes.com/rssfeeds/1898055.cms",
+                "name": "Viral  News",
+                "url": "https://www.google.com/alerts/feeds/12992764234649873012/18319230502453884600",
                 "max_age_hours": 24,
-                "max_items": 0
+                "max_items": 7
+            },
+            {
+                "name": "Trending  News",
+                "url": "https://www.google.com/alerts/feeds/12992764234649873012/15504733629740708398",
+                "max_age_hours": 24,
+                "max_items": 7
             }
 
         ]
