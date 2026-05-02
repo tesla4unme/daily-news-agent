@@ -303,7 +303,7 @@ CATEGORIES = {
         ]
     },
 
-    "📈 Markets": {
+    "📈 Trending": {
         "feeds": [
 
             {
@@ -334,7 +334,7 @@ CATEGORY_IDS = {
 "🌆 Cities": "cities",
 "📰 Editorial": "editorial",
 "💻 Technology": "technology",
-"📈 Markets": "markets"
+"📈 Trending": "Trending"
 }
 
 # ======================================
@@ -408,7 +408,7 @@ box-shadow:0 4px 14px rgba(0,0,0,0.08);
 <a href="#cities">🌆 Cities</a> |
 <a href="#editorial">📰 Editorial</a> |
 <a href="#technology">💻 Technology</a> |
-<a href="#markets">📈 Markets</a>
+<a href="#Trending">📈 Trending</a>
 
 </div>
 
