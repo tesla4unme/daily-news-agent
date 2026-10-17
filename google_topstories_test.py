@@ -264,7 +264,23 @@ CATEGORIES = {
                 "url": "	https://indianexpress.com/section/opinion/feed/",
                 "max_age_hours": 24,
                 "max_items": 4
-            }
+            },
+            {"name": "Opinion-ThePrint",
+            "url": "https://news.google.com/rss/search?q=site:theprint.in/opinion+when:1d&hl=en-IN&gl=IN&ceid=IN:en",
+ "max_age_hours": 24, "max_items": 3
+ },
+{"name": "Opinion-Scroll",
+ "url": "https://news.google.com/rss/search?q=site:scroll.in+opinion+when:1d&hl=en-IN&gl=IN&ceid=IN:en",
+ "max_age_hours": 24, "max_items": 2},
+{"name": "Opinion-DeccanHerald",
+ "url": "https://news.google.com/rss/search?q=site:deccanherald.com/opinion+when:1d&hl=en-IN&gl=IN&ceid=IN:en",
+ "max_age_hours": 24, "max_items": 3},
+{"name": "Opinion-TheWire",
+ "url": "https://news.google.com/rss/search?q=site:thewire.in+opinion+when:1d&hl=en-IN&gl=IN&ceid=IN:en",
+ "max_age_hours": 24, "max_items": 2},
+{"name": "Opinion-Tribune",
+ "url": "https://news.google.com/rss/search?q=site:tribuneindia.com/news/comment+when:1d&hl=en-IN&gl=IN&ceid=IN:en",
+ "max_age_hours": 24, "max_items": 2},
 
 
         ]
