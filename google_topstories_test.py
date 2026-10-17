@@ -162,32 +162,25 @@ CATEGORIES = {
 
         ]
     },
-    "🛕 India": {
+      "📈 Trending": {
         "feeds": [
 
             {
-                "name": "National-TheHindu",
-                "url": "https://www.thehindu.com/news/national/feeder/default.rss",
-                "max_age_hours": 24,
-                "max_items": 2
-            },
-
-            {
-                "name": "National-TimesofIndia",
-                "url": "http://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms",
+                "name": "Viral  News",
+                "url": "https://www.google.com/alerts/feeds/12992764234649873012/18319230502453884600",
                 "max_age_hours": 24,
                 "max_items": 5
             },
-
             {
-                "name": "National-Google.com",
-                "url": "https://news.google.com/rss/search?q=India&hl=en-IN&gl=IN&ceid=IN:en",
+                "name": "Trending  News",
+                "url": "https://www.google.com/alerts/feeds/12992764234649873012/15504733629740708398",
                 "max_age_hours": 24,
-                "max_items": 1
+                "max_items": 5
             }
 
         ]
     },
+    
 
     "🌆 Bengaluru": {
     "feeds": [
@@ -195,7 +188,7 @@ CATEGORIES = {
             "name": "Bengaluru-Google",
             "url": "https://news.google.com/rss/search?q=Bengaluru&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 5
+            "max_items": 3
         }
     ]
 },
@@ -206,7 +199,7 @@ CATEGORIES = {
             "name": "Asansol-Google",
             "url": "https://news.google.com/rss/search?q=Asansol&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 5
+            "max_items": 2
         }
     ]
 },
@@ -217,7 +210,7 @@ CATEGORIES = {
             "name": "Kolkata-Google",
             "url": "https://news.google.com/rss/search?q=Kolkata&hl=en-IN&gl=IN&ceid=IN:en",
             "max_age_hours": 24,
-            "max_items": 5
+            "max_items": 2
         }
     ]
 },
@@ -248,14 +241,14 @@ CATEGORIES = {
                 "name": "Blog-TimesofIndia",
                 "url": "http://blogs.timesofindia.indiatimes.com/feed/defaultrss",
                 "max_age_hours": 24,
-                "max_items": 7
+                "max_items": 2
             },
             
             {
                 "name": "Opinion-TheStatesman",
                 "url": "https://www.thestatesman.com/rss/opinion",
                 "max_age_hours": 24,
-                "max_items": 4
+                "max_items": 2
             },
             
             
@@ -263,7 +256,7 @@ CATEGORIES = {
                 "name": "Opinion-Indianexpress",
                 "url": "	https://indianexpress.com/section/opinion/feed/",
                 "max_age_hours": 24,
-                "max_items": 4
+                "max_items": 2
             },
            {"name": "Opinion-Swarajya",
  "url": "https://news.google.com/rss/search?q=site:swarajyamag.com+when:1d&hl=en-IN&gl=IN&ceid=IN:en",
@@ -285,14 +278,14 @@ CATEGORIES = {
                 "name": "Tech-TimesofIndia",
                 "url": "https://timesofindia.indiatimes.com/technology/tech-news/rssfeeds/66949542.cms",
                 "max_age_hours": 24,
-                "max_items": 4
+                "max_items": 2
             },
 
             {
                 "name": "AI-Google",
                 "url": "https://news.google.com/rss/search?q=artificial+intelligence&hl=en-IN&gl=IN&ceid=IN:en",
                 "max_age_hours": 24,
-                "max_items": 0
+                "max_items": 2
             },
 
             {
@@ -310,25 +303,33 @@ CATEGORIES = {
 
         ]
     },
-
-    "📈 Trending": {
+"🛕 India": {
         "feeds": [
 
             {
-                "name": "Viral  News",
-                "url": "https://www.google.com/alerts/feeds/12992764234649873012/18319230502453884600",
+                "name": "National-TheHindu",
+                "url": "https://www.thehindu.com/news/national/feeder/default.rss",
                 "max_age_hours": 24,
-                "max_items": 5
+                "max_items": 0
             },
+
             {
-                "name": "Trending  News",
-                "url": "https://www.google.com/alerts/feeds/12992764234649873012/15504733629740708398",
+                "name": "National-TimesofIndia",
+                "url": "http://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms",
                 "max_age_hours": 24,
-                "max_items": 5
+                "max_items": 0
+            },
+
+            {
+                "name": "National-Google.com",
+                "url": "https://news.google.com/rss/search?q=India&hl=en-IN&gl=IN&ceid=IN:en",
+                "max_age_hours": 24,
+                "max_items": 2
             }
 
         ]
     }
+  
 
 }
 
