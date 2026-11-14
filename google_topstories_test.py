@@ -258,15 +258,11 @@ CATEGORIES = {
                 "max_age_hours": 24,
                 "max_items": 2
             },
-           {"name": "Opinion-Swarajya",
- "url": "https://news.google.com/rss/search?q=site:swarajyamag.com+when:1d&hl=en-IN&gl=IN&ceid=IN:en",
- "max_age_hours": 24, "max_items": 2},
+           
 {"name": "Opinion-Firstpost",
  "url": "https://news.google.com/rss/search?q=site:firstpost.com+opinion+when:1d&hl=en-IN&gl=IN&ceid=IN:en",
  "max_age_hours": 24, "max_items": 2},
-{"name": "Analysis-ORF",
- "url": "https://news.google.com/rss/search?q=site:orfonline.org+when:7d&hl=en-IN&gl=IN&ceid=IN:en",
- "max_age_hours": 24, "max_items": 2},
+
 
         ]
     },
